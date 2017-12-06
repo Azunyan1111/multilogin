@@ -1,0 +1,21 @@
+version: '3.2'
+
+services:
+  multilogin:
+    image: 'golang:1.9.2'
+    volumes:
+      - 'data:/go'
+      - '.:/go/src/github.com/Azunyan1111/multilogin'
+    ports:
+    # localPort:DockerPort
+      - '8080:8080'
+    environment:
+      - 'PORT=8080'
+      - 'SESSION_SECRET'
+    command: bash -c "cd /go/src/github.com/Azunyan1111/multilogin &&
+     go get ./... &&
+     go run main.go"
+
+volumes:
+  data:
+    driver: 'local'
