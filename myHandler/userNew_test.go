@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"testing"
 	"github.com/PuerkitoBio/goquery"
+	"net/url"
 )
 
 
@@ -24,7 +25,7 @@ func TestGetUserNew(t *testing.T) {
 }
 
 func TestPostUserNew(t *testing.T) {
-	/*
+
 	f := make(url.Values)
 	f.Set("InputEmail", "bar@bar.com")
 	f.Set("InputUserName", "bar")
@@ -35,8 +36,8 @@ func TestPostUserNew(t *testing.T) {
 	f.Set("InputAddress", "福岡県")
 
 	e, req, rec := testTemplatePost("/user/new",f.Encode())
-	_ = e.NewContext(req, rec)
-	/*
+	c := e.NewContext(req, rec)
+
 	if assert.NoError(t, PostUserNew(c)) {
 		assert.Equal(t, http.StatusTemporaryRedirect, rec.Code)
 		doc, _ := goquery.NewDocumentFromReader(rec.Result().Body)
@@ -46,5 +47,4 @@ func TestPostUserNew(t *testing.T) {
 		})
 		assert.Equal(t, "登録完了",text)
 	}
-	*/
 }
