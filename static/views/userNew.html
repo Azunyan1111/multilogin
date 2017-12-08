@@ -1,1 +1,69 @@
-This is New User Page.
+{{template "header"}}
+        <div id="new" class="container">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    ユーザー登録
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="InputEmail">メール・アドレス</label>
+                            <div class="col-sm-10">
+                                <input type="email" class="form-control" id="InputEmail" placeholder="azusa@nakano.me">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="InputUserName">ユーザー名</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="InputUserName" placeholder="中野 梓">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="InputUserName">サムネイル</label>
+                            <div class="col-sm-10">
+                                <input type="url" class="form-control" id="InputUserName" placeholder="http://nakano.me/azusa.jpg">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="InputAge">年齢</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" id="InputAge" placeholder="16">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="InputBirthday">生年月日</label>
+                            <div class="col-sm-10">
+                                <input type="date" class="form-control" id="InputBirthday" placeholder="1996/11/11">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="InputPhone">電話番号</label>
+                            <div class="col-sm-10">
+                                <input type="tel" class="form-control" id="InputPhone" placeholder="090-0000-0000">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="InputAddress">住所</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="InputAddress" placeholder="千葉県旭市ニー1">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-default">送信</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+{{template "footer"}}
