@@ -1,12 +1,11 @@
 package myHandler
 
 import (
+	"github.com/PuerkitoBio/goquery"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
-	"github.com/PuerkitoBio/goquery"
 )
-
 
 func TestHelloWorld(t *testing.T) {
 	e, req, rec := testTemplateGet("/")
@@ -19,6 +18,6 @@ func TestHelloWorld(t *testing.T) {
 		doc.Find("#test_helloWorld").Each(func(_ int, s *goquery.Selection) {
 			text = s.Text()
 		})
-		assert.Equal(t, "Hello World",text)
+		assert.Equal(t, "Hello World", text)
 	}
 }

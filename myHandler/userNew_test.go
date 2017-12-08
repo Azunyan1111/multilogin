@@ -1,13 +1,12 @@
 package myHandler
 
 import (
+	"github.com/PuerkitoBio/goquery"
 	"github.com/stretchr/testify/assert"
 	"net/http"
-	"testing"
-	"github.com/PuerkitoBio/goquery"
 	"net/url"
+	"testing"
 )
-
 
 func TestGetUserNew(t *testing.T) {
 	e, req, rec := testTemplateGet("/user/new")
@@ -20,7 +19,7 @@ func TestGetUserNew(t *testing.T) {
 		doc.Find("#test_userNew").Each(func(_ int, s *goquery.Selection) {
 			text = s.Text()
 		})
-		assert.Equal(t, "ユーザー登録",text)
+		assert.Equal(t, "ユーザー登録", text)
 	}
 }
 
@@ -35,7 +34,7 @@ func TestPostUserNew(t *testing.T) {
 	f.Set("InputPhone", "080-3749-7392")
 	f.Set("InputAddress", "福岡県")
 
-	e, req, rec := testTemplatePost("/user/new",f.Encode())
+	e, req, rec := testTemplatePost("/user/new", f.Encode())
 	c := e.NewContext(req, rec)
 
 	if assert.NoError(t, PostUserNew(c)) {
@@ -45,6 +44,6 @@ func TestPostUserNew(t *testing.T) {
 		doc.Find("#test_userNewPost").Each(func(_ int, s *goquery.Selection) {
 			text = s.Text()
 		})
-		assert.Equal(t, "登録完了",text)
+		assert.Equal(t, "登録完了", text)
 	}
 }
