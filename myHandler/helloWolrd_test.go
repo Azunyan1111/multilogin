@@ -4,6 +4,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
+	"github.com/PuerkitoBio/goquery"
 )
 
 
@@ -13,6 +14,11 @@ func TestHandler_HelloWorld(t *testing.T) {
 
 	if assert.NoError(t, HelloWorld(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)
-		assert.Equal(t, "Hello World", rec.Body.String())
+		doc, _ := goquery.NewDocumentFromReader(rec.Result().Body)
+		var text string
+		doc.Find("#helloWorld").Each(func(_ int, s *goquery.Selection) {
+			text = s.Text()
+		})
+		assert.Equal(t, "Hello World",text)
 	}
 }
