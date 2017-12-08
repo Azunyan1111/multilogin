@@ -8,7 +8,6 @@ import (
 	"github.com/labstack/echo-contrib/session"
 	"github.com/gorilla/sessions"
 	"github.com/gorilla/securecookie"
-	"log"
 	"io"
 	"html/template"
 )
@@ -24,7 +23,7 @@ func main() {
 	}
 	// HTML Template Read
 	t := &Template{
-		templates: template.Must(template.ParseGlob("public/views/*.html")),
+		templates: template.Must(template.ParseGlob("static/views/*.html")),
 	}
 	e.Renderer = t
 
@@ -45,7 +44,7 @@ func main() {
 		return c.JSON(http.StatusOK,"Hello World")
 	})
 
-	e.Start(":" + os.Getenv("PORT2"))
+	e.Start(":" + os.Getenv("PORT"))
 }
 
 func customHeader(next echo.HandlerFunc) echo.HandlerFunc {
