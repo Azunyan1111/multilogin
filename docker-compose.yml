@@ -9,6 +9,7 @@ services:
     ports:
     # localPort:DockerPort
       - '8080:8080'
+      - '443:443'
     environment:
       - 'PORT=8080'
       - 'SESSION_SECRET'

@@ -1,4 +1,5 @@
 start:
+	go test ./...
 	docker-compose up
 
 fmt:

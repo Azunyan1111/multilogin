@@ -1,15 +1,15 @@
 package main
 
 import (
-	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
-	"net/http"
-	"os"
-	"github.com/labstack/echo-contrib/session"
-	"github.com/gorilla/sessions"
+	"github.com/Azunyan1111/multilogin/myHandler"
 	"github.com/gorilla/securecookie"
-	"io"
+	"github.com/gorilla/sessions"
+	"github.com/labstack/echo"
+	"github.com/labstack/echo-contrib/session"
+	"github.com/labstack/echo/middleware"
 	"html/template"
+	"io"
+	"os"
 )
 
 func main() {
@@ -40,9 +40,7 @@ func main() {
 	e.Static("/static", "static")
 
 	// ルーティング
-	e.GET("/", func(c echo.Context) error {
-		return c.JSON(http.StatusOK,"Hello World")
-	})
+	e.GET("/", myHandler.HelloWorld)
 
 	e.Start(":" + os.Getenv("PORT"))
 }
