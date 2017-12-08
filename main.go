@@ -15,6 +15,8 @@ import (
 func main() {
 	// Echoのインスタンス作る
 	e := echo.New()
+	//デバッグモード。本番環境だと入れない（データベース的な意味で）
+	e.Debug = true
 
 	logConfig := middleware.LoggerConfig{
 		Format: `| ${time_rfc3339} | ${host}${uri} ` +
@@ -30,7 +32,9 @@ func main() {
 	// 全てのリクエストで差し込みたいミドルウェア（ログとか）はここ
 	e.Use(middleware.LoggerWithConfig(logConfig))
 	e.Use(middleware.Recover())
-	e.Use(middleware.CSRF())
+	e.Use(middleware.CSRFWithConfig(middleware.CSRFConfig{
+		TokenLookup: "form:csrf",
+	}))
 	e.Use(middleware.Gzip())
 	e.Use(middleware.Secure())
 	e.Use(session.Middleware(sessions.NewCookieStore(securecookie.GenerateRandomKey(64))))
@@ -41,6 +45,17 @@ func main() {
 
 	// ルーティング
 	e.GET("/", myHandler.HelloWorld)
+	// ユーザー
+	e.GET("/user/new", myHandler.GetUserNew)
+	e.POST("/user/new", myHandler.PostUserNew)
+	e.GET("/user/update", myHandler.HelloWorld)
+	// サービス
+	e.GET("/service/new", myHandler.HelloWorld)
+	e.GET("/service/update", myHandler.HelloWorld)
+
+	// API
+	e.GET("/api/user/name", myHandler.HelloWorld)
+	e.GET("/api/user/image", myHandler.HelloWorld)
 
 	e.Start(":" + os.Getenv("PORT"))
 }
