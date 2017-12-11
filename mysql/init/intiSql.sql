@@ -13,7 +13,7 @@ CREATE TABLE `users` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB;
 
 CREATE TABLE `service` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -33,14 +33,14 @@ CREATE TABLE `service` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB;
 
 CREATE TABLE `confirmed_service` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_uuid` char(255) DEFAULT NULL,
   `service_uuid` char(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB;
 
 INSERT INTO `users` (`uuid`, `user`, `image`, `age`, `birthday`, `email`, `email_ok`, `phone`, `phone_ok`, `address`)
 VALUES

@@ -1,5 +1,11 @@
-test:
+setup:
+	docker-compose build
+
+db:
 	docker-compose up -d db
+
+test:
+	make db
 	go test ./...
 
 start:
