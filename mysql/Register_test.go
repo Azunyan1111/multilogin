@@ -3,6 +3,7 @@ package mysql
 import (
 	"testing"
 	"github.com/stretchr/testify/assert"
+	"github.com/Azunyan1111/multilogin/model"
 )
 
 func TestDataBaseInit(t *testing.T) {
@@ -12,5 +13,31 @@ func TestDataBaseInit(t *testing.T) {
 			panic(err)
 		}
 		assert.Equal(t,int64(0),ra)
+	}
+}
+
+func TestSelectUserByUuid(t *testing.T) {
+	user, err := SelectUserByUuid("uuid2")
+	if err != nil{
+		panic(err)
+	}
+	assert.Equal(t,"hoge",user.UserName)
+}
+
+func TestInsertUser(t *testing.T) {
+	var user model.User
+	user.UserName = "涼風青葉"
+	user.Email = "aoba@eaglejump.co.jp"
+	uid,err := InsertUser(user)
+	if err != nil{
+		panic(err)
+	}
+	selectUser,err := SelectUserByUuid(uid)
+	if err != nil{
+		panic(err)
+	}
+	assert.Equal(t,uid,selectUser.Uid)
+	if err := DeleteUser(uid); err != nil{
+		panic(err)
 	}
 }

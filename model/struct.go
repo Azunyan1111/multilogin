@@ -26,11 +26,16 @@ type UserNewPage struct {
 }
 
 type User struct {
-	UserName string
-	Email    string
-	Image    string
-	Age      string
-	Birthday string
-	Phone    string
-	Address  string
+	Uid       string
+	UserName  string
+	Email     string
+	EmailOK   bool
+	Image     string
+	Age       string
+	Birthday  string
+	Phone     string
+	PhoneOK   bool
+	Address   string
+	CreatedAt string
+	UpdatedAt string
 }

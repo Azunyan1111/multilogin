@@ -33,8 +33,28 @@ func ConnectionTest()(int64, error){
 	return ra, nil
 }
 
-func InsertNewUser(user model.User) error{
-	_, err := MyDB.Exec("INSERT INTO `users` (`uuid`, `user`, `email`) VALUES (?, ?, ?);",uuid.New(),user.UserName, user.Email)
+func SelectUserByUuid(uuid string)(model.User, error){
+	row := MyDB.QueryRow("select * from users where uuid = ?;", uuid)
+	var dataBaseId int
+	var user model.User
+	if err := row.Scan(&dataBaseId, &user.Uid, &user.UserName, &user.Image, &user.Age, &user.Birthday, &user.Email,
+		&user.EmailOK, &user.Phone, &user.PhoneOK, &user.Address, &user.CreatedAt, &user.UpdatedAt); err != nil{
+		return model.User{}, err
+	}
+	return user, nil
+}
+
+func InsertUser(user model.User)(string, error){
+	uid := uuid.New()
+	_, err := MyDB.Exec("INSERT INTO `users` (`uuid`, `user`, `email`) VALUES (?, ?, ?);",uid,user.UserName, user.Email)
+	if err != nil {
+		return "", err
+	}
+	return uid.String(),nil
+}
+
+func DeleteUser(uid string)error{
+	_, err := MyDB.Exec("DELETE FROM users WHERE uuid = ?;", uid)
 	if err != nil {
 		return err
 	}
