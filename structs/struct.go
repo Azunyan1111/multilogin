@@ -1,4 +1,4 @@
-package model
+package structs
 
 type Register interface {
 	RegisterNewUser(user User) error

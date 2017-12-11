@@ -3,7 +3,7 @@ package mysql
 import (
 	"testing"
 	"github.com/stretchr/testify/assert"
-	"github.com/Azunyan1111/multilogin/model"
+	"github.com/Azunyan1111/multilogin/structs"
 )
 
 func TestDataBaseInit(t *testing.T) {
@@ -25,7 +25,7 @@ func TestSelectUserByUuid(t *testing.T) {
 }
 
 func TestInsertUser(t *testing.T) {
-	var user model.User
+	var user structs.User
 	user.UserName = "涼風青葉"
 	user.Email = "aoba@eaglejump.co.jp"
 	uid,err := InsertUser(user)
@@ -37,7 +37,7 @@ func TestInsertUser(t *testing.T) {
 		panic(err)
 	}
 	assert.Equal(t,uid,selectUser.Uid)
-	if err := DeleteUser(uid); err != nil{
+	if err := DeleteUserByUid(uid); err != nil{
 		panic(err)
 	}
 }

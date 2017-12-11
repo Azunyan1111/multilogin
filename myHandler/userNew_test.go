@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"net/url"
 	"testing"
+	"github.com/Azunyan1111/multilogin/mysql"
 )
 
 func TestGetUserNew(t *testing.T) {
@@ -24,10 +25,10 @@ func TestGetUserNew(t *testing.T) {
 }
 
 func TestPostUserNew(t *testing.T) {
-
+	mysql.DataBaseInit()
 	f := make(url.Values)
 	f.Set("InputEmail", "bar@bar.com")
-	f.Set("InputUserName", "bar")
+	f.Set("InputUserName", "TestUser114514")
 	f.Set("InputImage", "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Bar-P1030319.jpg/1200px-Bar-P1030319.jpg")
 	f.Set("InputAge", "22")
 	f.Set("InputBirthday", "1985-5-3")
@@ -45,5 +46,8 @@ func TestPostUserNew(t *testing.T) {
 			text = s.Text()
 		})
 		assert.Equal(t, "登録完了", text)
+	}
+	if err := mysql.DeleteUserByTestUser(); err != nil{
+		panic(err)
 	}
 }
