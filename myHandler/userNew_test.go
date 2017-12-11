@@ -7,6 +7,7 @@ import (
 	"net/url"
 	"testing"
 	"github.com/Azunyan1111/multilogin/mysql"
+	"github.com/Azunyan1111/multilogin/structs"
 )
 
 func TestGetUserNew(t *testing.T) {
@@ -27,13 +28,21 @@ func TestGetUserNew(t *testing.T) {
 func TestPostUserNew(t *testing.T) {
 	mysql.DataBaseInit()
 	f := make(url.Values)
-	f.Set("InputEmail", "bar@bar.com")
-	f.Set("InputUserName", "TestUser114514")
-	f.Set("InputImage", "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Bar-P1030319.jpg/1200px-Bar-P1030319.jpg")
-	f.Set("InputAge", "22")
-	f.Set("InputBirthday", "1985-5-3")
-	f.Set("InputPhone", "080-3749-7392")
-	f.Set("InputAddress", "福岡県")
+	var user structs.User
+	user.Email = "bar@bar.com"
+	user.UserName = "TestUser114514"
+	user.Image = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Bar-P1030319.jpg/1200px-Bar-P1030319.jpg"
+	user.Age = "22"
+	user.Birthday = "1985-5-3"
+	user.Phone = "080-3749-7392"
+	user.Address = "福岡県"
+	f.Set("InputEmail", user.Email)
+	f.Set("InputUserName", user.UserName)
+	f.Set("InputImage", user.Image)
+	f.Set("InputAge", user.Age)
+	f.Set("InputBirthday", user.Birthday)
+	f.Set("InputPhone", user.Phone)
+	f.Set("InputAddress", user.Address)
 
 	e, req, rec := testTemplatePost("/user/new", f.Encode())
 	c := e.NewContext(req, rec)
@@ -47,6 +56,17 @@ func TestPostUserNew(t *testing.T) {
 		})
 		assert.Equal(t, "登録完了", text)
 	}
+	sqlUser, err := mysql.SelectUserByTestUser()
+	if err != nil{
+		panic(err)
+	}
+	assert.Equal(t,user.UserName,sqlUser.UserName)
+	assert.Equal(t,user.Email,sqlUser.Email)
+	assert.Equal(t,user.Image,sqlUser.Image)
+	assert.Equal(t,user.Age,sqlUser.Age)
+	assert.Equal(t,user.Birthday,sqlUser.Birthday)
+	assert.Equal(t,user.Phone,sqlUser.Phone)
+	assert.Equal(t,user.Address,sqlUser.Address)
 	if err := mysql.DeleteUserByTestUser(); err != nil{
 		panic(err)
 	}
