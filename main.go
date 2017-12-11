@@ -10,13 +10,15 @@ import (
 	"html/template"
 	"io"
 	"os"
+	"github.com/Azunyan1111/multilogin/mysql"
 )
 
 func main() {
 	// Echoのインスタンス作る
 	e := echo.New()
-	//デバッグモード。本番環境だと入れない（データベース的な意味で）
-	e.Debug = true
+	if err := mysql.DataBaseInit(); err != nil{
+		panic(err)
+	}
 
 	logConfig := middleware.LoggerConfig{
 		Format: `| ${time_rfc3339} | ${host}${uri} ` +

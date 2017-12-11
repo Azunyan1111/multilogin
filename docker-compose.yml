@@ -13,17 +13,20 @@ services:
     environment:
       - 'PORT=8080'
       - 'SESSION_SECRET'
-    command: bash -c "cd /go/src/github.com/Azunyan1111/multilogin &&
+    command: bash -c 'cd /go/src/github.com/Azunyan1111/multilogin &&
      go get ./... &&
-     go run main.go"
+     go run main.go'
 
   db:
-    image: 'mysql'
+    build: './mysql'
     ports:
      - '3306:3306'
     environment:
-        MYSQL_DATABASE: mysql
+        MYSQL_DATABASE: ml
+#        ルートのパスワードをGitHubで公開するのはとてもよろしくないと思う。
+#        で、でもサーバーのポートを開けなかったら問題ないよね！？
         MYSQL_ROOT_PASSWORD: password
+
 
 volumes:
   data:
