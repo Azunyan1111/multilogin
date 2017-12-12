@@ -1,0 +1,71 @@
+{{template "header"}}
+        {{if .Message}}
+<div class="alert alert-warning" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="閉じる"><span aria-hidden="true">×</span></button>
+    <strong>warning</strong>{{.Message}}</div>
+        {{end}}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <p id="test_UserMyPage">登録情報更新</p>
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal" action="/user/new" method="post">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="InputEmail">メール・アドレス<br><font color="red">※必須※</font></label>
+                            <div class="col-sm-10">
+                                <input type="email" class="form-control" name="InputEmail" required="required" placeholder="azusa@nakano.me" value="{{.User.Email}}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="InputUserName">ユーザー名<br><font color="red">※必須※</font></label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="InputUserName" required="required" placeholder="中野 梓" value="{{.User.UserName}}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="InputImage">サムネイル</label>
+                            <div class="col-sm-10">
+                                <input type="url" class="form-control" name="InputImage" placeholder="http://nakano.me/azusa.jpg" value="{{.User.Image}}">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="InputAge">年齢</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" name="InputAge" placeholder="16" value="{{.User.Age}}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="InputBirthday">生年月日</label>
+                            <div class="col-sm-10">
+                                <input type="date" class="form-control" name="InputBirthday" placeholder="1996/11/11" value="{{.User.Birthday}}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="InputPhone">電話番号</label>
+                            <div class="col-sm-10">
+                                <input type="tel" class="form-control" name="InputPhone" placeholder="090-0000-0000" value="{{.User.Phone}}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="InputAddress">住所</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="InputAddress" placeholder="千葉県旭市ニー1" value="{{.User.Address}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <input type="hidden" name="csrf" hidden value="{{.Csrf}}">
+                                <button type="submit" value="Save" class="btn btn-default">送信</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+{{template "footer"}}

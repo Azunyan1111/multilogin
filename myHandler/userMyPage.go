@@ -13,7 +13,6 @@ func GetUserMyPage(c echo.Context) error {
 	// セッション確認
 	s := session.Default(c)
 	var uid string
-	// Test is not run
 	if s != nil{
 		uid = fmt.Sprintf("%v", s.Get("uid"))
 	}
@@ -22,6 +21,7 @@ func GetUserMyPage(c echo.Context) error {
 		// Not Login
 		return c.Redirect(http.StatusTemporaryRedirect, "/")
 	}
+
 	csrf := fmt.Sprintf("%v", c.Get("csrf"))
-	return c.Render(http.StatusOK, "userNew.html", structs.UserNewPage{Csrf: csrf})
+	return c.Render(http.StatusOK, "userMyPage.html", structs.UserNewPage{Csrf: csrf})
 }

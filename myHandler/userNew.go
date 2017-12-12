@@ -42,7 +42,6 @@ func PostUserNew(c echo.Context) error {
 
 	// セッションに自分のuuidをつけて返す
 	s := session.Default(c)
-	// Test is not run
 	if s != nil{
 		s.Set("uid", uid)
 		s.Save()
