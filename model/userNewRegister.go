@@ -3,6 +3,7 @@ package model
 import (
 	"github.com/Azunyan1111/multilogin/mysql"
 	"github.com/Azunyan1111/multilogin/structs"
+	"log"
 )
 
 func RegisterNewUser(user structs.User)(string,error) {
@@ -36,4 +37,45 @@ func RegisterNewUser(user structs.User)(string,error) {
 		}
 	}
 	return uid, err
+}
+
+func UpdateNewUser(user structs.User)(error) {
+	if user.UserName != "" {
+		if err := mysql.UpdateUserName(user.Uid, user.UserName); err != nil {
+			return  err
+		}
+	}
+	if user.Email != "" {
+		if err := mysql.UpdateUserEmail(user.Uid, user.Email); err != nil {
+			return  err
+		}
+	}
+	if user.Image != "" {
+		if err := mysql.UpdateUserImage(user.Uid, user.Image); err != nil {
+			return  err
+		}
+	}
+	if user.Age != "" {
+		log.Println(user.Uid, "aaa" , user.Age)
+		if err := mysql.UpdateUserAge(user.Uid, user.Age); err != nil {
+			log.Println(err)
+			return  err
+		}
+	}
+	if user.Birthday != "" {
+		if err := mysql.UpdateUserBirthday(user.Uid, user.Birthday); err != nil {
+			return  err
+		}
+	}
+	if user.Phone != "" {
+		if err := mysql.UpdateUserPhone(user.Uid, user.Phone); err != nil {
+			return  err
+		}
+	}
+	if user.Address != "" {
+		if err := mysql.UpdateUserAddress(user.Uid, user.Address); err != nil {
+			return  err
+		}
+	}
+	return nil
 }

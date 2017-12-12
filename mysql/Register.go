@@ -44,6 +44,32 @@ func SelectUserByUuid(uuid string) (structs.User, error) {
 	return user, nil
 }
 
+func SelectConfirmedByUid(uuid string) ([]structs.Service, error) {
+	rows, err := MyDB.Query("select * from confirmed_service where user_uuid = ?;", uuid)
+	if err != nil {
+		return []structs.Service{}, err
+	}
+	var confirmeds []structs.Confirmed
+	for rows.Next() {
+		var dataBaseId int
+		var confirmed structs.Confirmed
+		if err := rows.Scan(&dataBaseId, &confirmed.UserUid, &confirmed.ServiceUid); err != nil{
+			return []structs.Service{}, err
+		}
+		confirmeds = append(confirmeds, confirmed)
+	}
+	var services []structs.Service
+	for _, con := range confirmeds{
+		var service structs.Service
+		row := MyDB.QueryRow("select (`name`) from service where uuid = ?;", con.ServiceUid)
+		if err := row.Scan(&service.ServiceName); err != nil{
+			return []structs.Service{}, err
+		}
+		services = append(services, service)
+	}
+	return services, nil
+}
+
 func InsertUser(user structs.User) (string, error) {
 	uid := uuid.New()
 	_, err := MyDB.Exec("INSERT INTO `users` (`uuid`, `user`, `email`) VALUES (?, ?, ?);", uid, user.UserName, user.Email)

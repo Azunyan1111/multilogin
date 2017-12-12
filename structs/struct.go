@@ -29,6 +29,12 @@ type ServiceNewPage struct {
 	Message string
 	Csrf    string
 }
+type UserMyPage struct {
+	User    User
+	Service []Service
+	Message string
+	Csrf    string
+}
 
 type User struct {
 	Uid       string
@@ -63,4 +69,10 @@ type Service struct {
 	UserAddress  bool
 	CreatedAt    string
 	UpdatedAt    string
+}
+
+type Confirmed struct {
+	Id string
+	UserUid string
+	ServiceUid string
 }
