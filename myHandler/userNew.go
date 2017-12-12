@@ -10,6 +10,16 @@ import (
 )
 
 func GetUserNew(c echo.Context) error {
+	// セッション確認
+	s := session.Default(c)
+	var uid string
+	if s != nil{
+		uid = fmt.Sprintf("%v", s.Get("uid"))
+	}
+	if len(uid) > 5{
+		// Not Login
+		return c.Redirect(http.StatusTemporaryRedirect, "/user/mypage")
+	}
 	csrf := fmt.Sprintf("%v", c.Get("csrf"))
 	return c.Render(http.StatusOK, "userNew.html", structs.UserNewPage{Csrf: csrf})
 }
