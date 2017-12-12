@@ -3,14 +3,13 @@ package main
 import (
 	"github.com/Azunyan1111/multilogin/myHandler"
 	"github.com/Azunyan1111/multilogin/mysql"
-	"github.com/gorilla/securecookie"
-	"github.com/gorilla/sessions"
 	"github.com/labstack/echo"
-	"github.com/labstack/echo-contrib/session"
+
 	"github.com/labstack/echo/middleware"
 	"html/template"
 	"io"
 	"os"
+	"github.com/ipfans/echo-session"
 )
 
 func main() {
@@ -39,7 +38,13 @@ func main() {
 	}))
 	e.Use(middleware.Gzip())
 	e.Use(middleware.Secure())
-	e.Use(session.Middleware(sessions.NewCookieStore(securecookie.GenerateRandomKey(64))))
+	//e.Use(session.Middleware(sessions.NewCookieStore(securecookie.GenerateRandomKey(64))))
+	store, err := session.NewRedisStore(32, "tcp", "localhost:6379", "", []byte("secret"))
+	if err != nil {
+		panic(err)
+	}
+	e.Use(session.Sessions("GSESSION", store))
+
 	e.Use(customHeader)
 	//e.StartAutoTLS(":443")
 
@@ -50,7 +55,7 @@ func main() {
 	// ユーザー
 	e.GET("/user/new", myHandler.GetUserNew)
 	e.POST("/user/new", myHandler.PostUserNew)
-	e.GET("/user/update", myHandler.HelloWorld)
+	e.GET("/user/mypage", myHandler.GetUserMyPage)
 	// サービス
 	e.GET("/service/new", myHandler.GetServiceNew)
 	e.POST("/service/new", myHandler.PostServiceNew)

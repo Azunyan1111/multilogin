@@ -6,6 +6,7 @@ import (
 	"github.com/Azunyan1111/multilogin/structs"
 	"github.com/labstack/echo"
 	"net/http"
+	"github.com/ipfans/echo-session"
 )
 
 func GetUserNew(c echo.Context) error {
@@ -33,9 +34,18 @@ func PostUserNew(c echo.Context) error {
 		user.Message = "入力されてない箇所があります | 例えば : ユーザー名"
 		return c.Render(http.StatusBadRequest, "userNew.html", user)
 	}
-	if err := model.RegisterNewUser(user.User); err != nil {
+	uid ,err := model.RegisterNewUser(user.User)
+	if err != nil {
 		user.Message = "サーバーエラーです | 次の内容を管理者に問い合わせてください | " + err.Error()
-		return c.Render(http.StatusBadRequest, "userNew.html", user)
+		return c.Render(http.StatusInternalServerError, "userNew.html", user)
+	}
+
+	// セッションに自分のuuidをつけて返す
+	s := session.Default(c)
+	// Test is not run
+	if s != nil{
+		s.Set("uid", uid)
+		s.Save()
 	}
 
 	return c.Render(http.StatusTemporaryRedirect, "userNewEnd.html", "")
