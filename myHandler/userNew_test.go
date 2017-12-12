@@ -1,13 +1,13 @@
 package myHandler
 
 import (
+	"github.com/Azunyan1111/multilogin/mysql"
+	"github.com/Azunyan1111/multilogin/structs"
 	"github.com/PuerkitoBio/goquery"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/url"
 	"testing"
-	"github.com/Azunyan1111/multilogin/mysql"
-	"github.com/Azunyan1111/multilogin/structs"
 )
 
 func TestGetUserNew(t *testing.T) {
@@ -57,17 +57,17 @@ func TestPostUserNew(t *testing.T) {
 		assert.Equal(t, "登録完了", text)
 	}
 	sqlUser, err := mysql.SelectUserByTestUser()
-	if err != nil{
+	if err != nil {
 		panic(err)
 	}
-	assert.Equal(t,user.UserName,sqlUser.UserName)
-	assert.Equal(t,user.Email,sqlUser.Email)
-	assert.Equal(t,user.Image,sqlUser.Image)
-	assert.Equal(t,user.Age,sqlUser.Age)
-	assert.Equal(t,user.Birthday,sqlUser.Birthday)
-	assert.Equal(t,user.Phone,sqlUser.Phone)
-	assert.Equal(t,user.Address,sqlUser.Address)
-	if err := mysql.DeleteUserByTestUser(); err != nil{
+	assert.Equal(t, user.UserName, sqlUser.UserName)
+	assert.Equal(t, user.Email, sqlUser.Email)
+	assert.Equal(t, user.Image, sqlUser.Image)
+	assert.Equal(t, user.Age, sqlUser.Age)
+	assert.Equal(t, user.Birthday, sqlUser.Birthday)
+	assert.Equal(t, user.Phone, sqlUser.Phone)
+	assert.Equal(t, user.Address, sqlUser.Address)
+	if err := mysql.DeleteUserByTestUser(); err != nil {
 		panic(err)
 	}
 }

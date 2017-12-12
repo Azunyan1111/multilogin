@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/Azunyan1111/multilogin/myHandler"
+	"github.com/Azunyan1111/multilogin/mysql"
 	"github.com/gorilla/securecookie"
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo"
@@ -10,13 +11,12 @@ import (
 	"html/template"
 	"io"
 	"os"
-	"github.com/Azunyan1111/multilogin/mysql"
 )
 
 func main() {
 	// Echoのインスタンス作る
 	e := echo.New()
-	if err := mysql.DataBaseInit(); err != nil{
+	if err := mysql.DataBaseInit(); err != nil {
 		panic(err)
 	}
 
