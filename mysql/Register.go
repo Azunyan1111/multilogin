@@ -53,6 +53,15 @@ func InsertUser(user structs.User) (string, error) {
 	return uid.String(), nil
 }
 
+func InsertService(service structs.Service) (string, error) {
+	uid := uuid.New()
+	_, err := MyDB.Exec("INSERT INTO `service` (`uuid`, `name`, `email`, `token`, `secret`) VALUES (?, ?, ?,?,?);", uid, service.ServiceName, service.Email, service.Token, service.Secret)
+	if err != nil {
+		return "", err
+	}
+	return uid.String(), nil
+}
+
 func DeleteUserByUid(uid string) error {
 	_, err := MyDB.Exec("DELETE FROM users WHERE uuid = ?;", uid)
 	if err != nil {
@@ -68,6 +77,13 @@ func DeleteUserByTestUser() error {
 	}
 	return nil
 }
+func DeleteUserByTestService() error {
+	_, err := MyDB.Exec("DELETE FROM service WHERE name = 'TestUser114514';")
+	if err != nil {
+		return err
+	}
+	return nil
+}
 func SelectUserByTestUser() (structs.User, error) {
 	row := MyDB.QueryRow("select * from users where user = 'TestUser114514';")
 	var dataBaseId int
@@ -75,6 +91,18 @@ func SelectUserByTestUser() (structs.User, error) {
 	if err := row.Scan(&dataBaseId, &user.Uid, &user.UserName, &user.Image, &user.Age, &user.Birthday, &user.Email,
 		&user.EmailOK, &user.Phone, &user.PhoneOK, &user.Address, &user.CreatedAt, &user.UpdatedAt); err != nil {
 		return structs.User{}, err
+	}
+	return user, nil
+}
+
+func SelectUserByTestService() (structs.Service, error) {
+	row := MyDB.QueryRow("select * from service where name = 'TestUser114514';")
+	var dataBaseId int
+	var user structs.Service
+	if err := row.Scan(&dataBaseId, &user.Uid, &user.ServiceName, &user.Email, &user.Url, &user.CallbackUrl, &user.Token,
+		&user.Secret, &user.UserName, &user.UserImage, &user.UserAge, &user.UserBirthday, &user.UserEmail,
+		&user.UserPhone, &user.UserAddress, &user.CreatedAt, &user.UpdatedAt); err != nil {
+		return structs.Service{}, err
 	}
 	return user, nil
 }
@@ -145,6 +173,71 @@ func UpdateUserPhoneOk(uid string, phoneOk bool) error {
 
 func UpdateUserAddress(uid string, address string) error {
 	_, err := MyDB.Exec("UPDATE users SET address = ? WHERE uuid = ?;", address, uid)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+// Service
+func UpdateServiceUrlByUid(uid string, url string) error {
+	_, err := MyDB.Exec("UPDATE service SET url = ? WHERE uuid = ?;", url, uid)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+func UpdateServiceCallbackUrlByUid(uid string, callbackUrl string) error {
+	_, err := MyDB.Exec("UPDATE service SET url_callback = ? WHERE uuid = ?;", callbackUrl, uid)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+func UpdateServiceNameByUid(uid string, name bool) error {
+	_, err := MyDB.Exec("UPDATE service SET p_name = ? WHERE uuid = ?;", name, uid)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+func UpdateServiceImageByUid(uid string, image bool) error {
+	_, err := MyDB.Exec("UPDATE service SET p_image = ? WHERE uuid = ?;", image, uid)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+func UpdateServiceAgeByUid(uid string, age bool) error {
+	_, err := MyDB.Exec("UPDATE service SET p_age = ? WHERE uuid = ?;", age, uid)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+func UpdateServiceBirthdayByUid(uid string, birthday bool) error {
+	_, err := MyDB.Exec("UPDATE service SET p_birthday = ? WHERE uuid = ?;", birthday, uid)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+func UpdateServiceEmailByUid(uid string, email bool) error {
+	_, err := MyDB.Exec("UPDATE service SET p_email = ? WHERE uuid = ?;", email, uid)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+func UpdateServicePhoneByUid(uid string, phone bool) error {
+	_, err := MyDB.Exec("UPDATE service SET p_phone = ? WHERE uuid = ?;", phone, uid)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+func UpdateServiceAddressByUid(uid string, address bool) error {
+	_, err := MyDB.Exec("UPDATE service SET p_address = ? WHERE uuid = ?;", address, uid)
 	if err != nil {
 		return err
 	}

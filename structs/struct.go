@@ -10,7 +10,7 @@ type Register interface {
 type MySql interface {
 	DataBaseInit() error
 
-	// User
+	// Service
 	InsertNewUser(user User) error
 	UpdateUser(user User) error
 
@@ -21,6 +21,11 @@ type MySql interface {
 
 type UserNewPage struct {
 	User    User
+	Message string
+	Csrf    string
+}
+type ServiceNewPage struct {
+	Service Service
 	Message string
 	Csrf    string
 }
@@ -38,4 +43,24 @@ type User struct {
 	Address   string
 	CreatedAt string
 	UpdatedAt string
+}
+
+type Service struct {
+	Uid         string
+	ServiceName string
+	Email       string
+	Url         string
+	CallbackUrl string
+	Token       string
+	Secret      string
+
+	UserName     bool
+	UserEmail    bool
+	UserImage    bool
+	UserAge      bool
+	UserBirthday bool
+	UserPhone    bool
+	UserAddress  bool
+	CreatedAt    string
+	UpdatedAt    string
 }

@@ -52,7 +52,8 @@ func main() {
 	e.POST("/user/new", myHandler.PostUserNew)
 	e.GET("/user/update", myHandler.HelloWorld)
 	// サービス
-	e.GET("/service/new", myHandler.HelloWorld)
+	e.GET("/service/new", myHandler.GetServiceNew)
+	e.POST("/service/new", myHandler.PostServiceNew)
 	e.GET("/service/update", myHandler.HelloWorld)
 
 	// API
