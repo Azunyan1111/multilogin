@@ -6,107 +6,37 @@
         {{end}}
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <p id="test_ServiceNew">サービス登録</p>
+                    <p id="test_ConfirmedNew">サービス連携</p>
                 </div>
                 <div class="panel-body">
+                    <p>{{.Service.ServiceName}}と連携してます<br></p>
+                    <p>このサービスでは下記の情報を提供します。</p>
+                    {{if .Service.UserName}}
+                        <p>ユーザー名</p>
+                    {{end}}
+                    {{if .Service.UserEmail}}
+                        <p>メールアドレス</p>
+                    {{end}}
+                    {{if .Service.UserImage}}
+                        <p>サムネイル画像</p>
+                    {{end}}
+                    {{if .Service.UserAge}}
+                        <p>年齢</p>
+                    {{end}}
+                    {{if .Service.UserBirthday}}
+                        <p>生年月日</p>
+                    {{end}}
+                    {{if .Service.UserPhone}}
+                        <p>電話番号</p>
+                    {{end}}
+                    {{if .Service.UserAddress}}
+                        <p>住所</p>
+                    {{end}}
                     <form class="form-horizontal" action="/service/new" method="post">
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label" for="InputEmail">メール・アドレス<br><font color="red">※必須※</font></label>
-                            <div class="col-sm-10">
-                                <input type="email" class="form-control" name="InputEmail" required="required" placeholder="azusa@nakano.me" value="{{.Service.Email}}">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label" for="InputUserName">サービス名<br><font color="red">※必須※</font></label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="InputServiceName" required="required" placeholder="あずにゃんﾍﾟﾛﾍﾟﾛ(^ω^)ジェネレーター" value="{{.Service.ServiceName}}">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label" for="InputImage">URL</label>
-                            <div class="col-sm-10">
-                                <input type="url" class="form-control" name="InputUrl" placeholder="http://azunyan.me/" value="{{.Service.Url}}"><!-- TODO: value-->
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label" for="InputAge">コールバックURL</label>
-                            <div class="col-sm-10">
-                                <input type="url" class="form-control" name="InputCallbackUrl" placeholder="http://azunyan.me/callback" value="{{.Service.CallbackUrl}}"><!-- TODO: value-->
-                            </div>
-                        </div>
-
-                        <div class="panel-body">
-                            ユーザー情報取得権限設定<br>
-                            ここでは必要なユーザー情報を設定します。ここで有効化した項目のみをAPIを使って取得することができます。<br>
-                            何の情報をサービスが取得するかはユーザーに知らされます。必要最低限に絞ることでユーザーファーストなサービスになるでしょう。
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label" for="InputUserName">ユーザー名</label>
-                            <div class="col-sm-10">
-                                <div class="checkbox">
-                                    <input type="checkbox" name="InputUserName">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label" for="InputUserEmail">メールアドレス</label>
-                            <div class="col-sm-10">
-                                <div class="checkbox">
-                                    <input  type="checkbox" name="InputUserEmail">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label" for="InputUserImage">画像URL</label>
-                            <div class="col-sm-10">
-                                <div class="checkbox">
-                                    <input  type="checkbox" name="InputUserImage">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label" for="InputUserAge">年齢</label>
-                            <div class="col-sm-10">
-                                <div class="checkbox">
-                                    <input  type="checkbox" name="InputUserAge">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label" for="InputUserBirthday">生年月日</label>
-                            <div class="col-sm-10">
-                                <div class="checkbox">
-                                    <input  type="checkbox" name="InputUserBirthday">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label" for="InputUserPhone">電話番号</label>
-                            <div class="col-sm-10">
-                                <div class="checkbox">
-                                    <input  type="checkbox" name="InputUserPhone">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label" for="InputUserAddress">住所</label>
-                            <div class="col-sm-10">
-                                <div class="checkbox">
-                                    <input  type="checkbox" name="InputUserAddress">
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <input type="hidden" name="csrf" hidden value="{{.Csrf}}">
-                                <button type="submit" value="Save" class="btn btn-default">送信</button>
+                                <button type="submit" value="Save" class="btn btn-default">連携</button>
                             </div>
                         </div>
                     </form>
