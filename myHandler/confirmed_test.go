@@ -1,0 +1,110 @@
+package myHandler
+
+import (
+	"github.com/stretchr/testify/assert"
+	"github.com/PuerkitoBio/goquery"
+	"testing"
+	"net/http"
+	"github.com/Azunyan1111/multilogin/mysql"
+	"github.com/labstack/echo-contrib/session"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
+
+	"github.com/labstack/echo"
+	"github.com/gorilla/sessions"
+	"github.com/Azunyan1111/multilogin/structs"
+)
+
+const(
+	userUid = "26d2983e-3d5a-421c-bf6f-d4608025e555"
+	serviceUid = "025ad602-7dba-4c08-8226-704b65f2873c"
+)
+
+func TestGetConfirmedNew(t *testing.T) {
+	mysql.DataBaseInit()
+
+	e, req, rec := testTemplateGet("/")
+	e.Use(session.Middleware(sessions.NewCookieStore([]byte("secret"))))
+	c := e.NewContext(req, rec)
+
+
+	// URL param
+	c.SetParamNames("serviceUid")
+	c.SetParamValues("025ad602-7dba-4c08-8226-704b65f2873c")
+
+	// session
+	mw := session.Middleware(sessions.NewCookieStore([]byte("secret")))
+	h := mw(func(c echo.Context) error {
+		sess, _ := session.Get("session", c)
+		sess.Values["uid"] = userUid
+		sess.Save(c.Request(), c.Response())
+		return c.String(http.StatusOK, "test")
+	})
+	h(c)
+
+
+	if assert.NoError(t, GetConfirmedNew(c)) {
+		assert.Equal(t, http.StatusOK, rec.Code)
+		doc, _ := goquery.NewDocumentFromReader(rec.Result().Body)
+		assert.Empty(t,doc.Find("#StatusCode").Text())
+		assert.Empty(t,doc.Find("#ErrorMessage").Text())
+		var text string
+		doc.Find("#new > div > div.panel-body > p:nth-child(1)").Each(func(_ int, s *goquery.Selection) {
+			text = s.Text()
+		})
+		assert.Equal(t, "GodServiceと連携してます", text)
+	}
+}
+
+func TestGetConfirmedPost(t *testing.T) {
+	mysql.DataBaseInit()
+
+	e, req, rec := testTemplateGet("/")
+
+	c := e.NewContext(req, rec)
+	// url param
+	c.SetParamNames("serviceUid")
+	c.SetParamValues(serviceUid)
+	// session
+	mw := session.Middleware(sessions.NewCookieStore([]byte("secret")))
+	h := mw(func(c echo.Context) error {
+		sess, _ := session.Get("session", c)
+		sess.Values["uid"] = userUid
+		sess.Save(c.Request(), c.Response())
+		return c.String(http.StatusOK, "test")
+	})
+	h(c)
+	/*//
+	if assert.NoError(t, GetConfirmedPost(c)) {
+		assert.Equal(t, http.StatusOK, rec.Code)
+		isNotFound,_ := mysql.IsNotFoundConfirmedByuUserUidAndServiceUid(userUid,serviceUid)
+		assert.Equal(t,true,isNotFound)
+		//assert.EqualError(t,errors.New(""),err.Error())
+		doc, _ := goquery.NewDocumentFromReader(rec.Result().Body)
+		var text string
+		doc.Find("#test_ConfirmedNew").Each(func(_ int, s *goquery.Selection) {
+			text = s.Text()
+		})
+		assert.Equal(t, "サービス連携", text)
+	}
+	//*/
+}
+
+
+func TestGetConfirmedPost2(t *testing.T){
+	mysql.DataBaseInit()
+	orm := mysql.GetOrm()
+
+	con := structs.ConfirmedService{UserUid:"daa8123d-be45-4574-88d7-339b145396fc"}
+
+	service := structs.Service{Uid:"025ad602-7dba-4c08-8226-704b65f2873c"}
+	user := structs.User{Uid:"26d2983e-3d5a-421c-bf6f-d4608025e555"}
+
+	orm.First(&con)
+	orm.First(&service)
+	orm.First(&user)
+
+	assert.Equal(t,"daa8123d-be45-4574-88d7-339b145396fc",con.UserUid)
+	assert.Equal(t,"GodService",service.ServiceName)
+	assert.Equal(t,"Azunyan1111",user.UserName)
+}
+
