@@ -9,7 +9,9 @@ import (
 	"html/template"
 	"io"
 	"os"
-	"github.com/ipfans/echo-session"
+	"github.com/gorilla/securecookie"
+	"github.com/gorilla/sessions"
+	"github.com/labstack/echo-contrib/session"
 )
 
 func main() {
@@ -38,12 +40,8 @@ func main() {
 	}))
 	e.Use(middleware.Gzip())
 	e.Use(middleware.Secure())
-	//e.Use(session.Middleware(sessions.NewCookieStore(securecookie.GenerateRandomKey(64))))
-	store, err := session.NewRedisStore(32, "tcp", "localhost:6379", "", []byte("secret"))
-	if err != nil {
-		panic(err)
-	}
-	e.Use(session.Sessions("GSESSION", store))
+	e.Use(session.Middleware(sessions.NewCookieStore(securecookie.GenerateRandomKey(64))))
+
 
 	e.Use(customHeader)
 	//e.StartAutoTLS(":443")

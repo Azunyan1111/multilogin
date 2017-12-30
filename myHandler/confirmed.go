@@ -7,7 +7,6 @@ import (
 	"github.com/labstack/echo-contrib/session"
 	"net/http"
 	"github.com/Azunyan1111/multilogin/mysql"
-	"log"
 )
 
 func GetConfirmedNew(c echo.Context) error {
@@ -23,7 +22,6 @@ func GetConfirmedNew(c echo.Context) error {
 	if s != nil{
 		userUid = fmt.Sprintf("%v", s.Values["uid"])
 	}
-	log.Println(userUid)
 	if len(userUid) < 6{
 		return c.Render(http.StatusBadRequest, "error.html",structs.Error{StatusCode:http.StatusBadRequest,
 		Message:"連携するにマルチログインにログインしてください"})
@@ -33,7 +31,6 @@ func GetConfirmedNew(c echo.Context) error {
 	orm := mysql.GetOrm()
 	var service structs.Service
 	orm.Find(&service, "uuid = ?",serviceUid)
-	log.Println(service)
 	if service.ID == 0{
 		return c.Render(http.StatusBadRequest, "error.html",structs.Error{StatusCode:http.StatusBadRequest,
 		Message:"連携するサービス情報が存在しないか、URLが間違っています。"})
@@ -54,7 +51,6 @@ func GetConfirmedPost(c echo.Context) error {
 	orm := mysql.GetOrm()
 	var service structs.Service
 	orm.Find(&service, "uuid = ?",serviceUid)
-	log.Println(service)
 	if service.ID == 0{
 		return c.Render(http.StatusBadRequest, "error.html",structs.Error{StatusCode:http.StatusBadRequest,
 			Message:"連携するサービス情報が存在しないか、URLが間違っています。"})
@@ -69,7 +65,6 @@ func GetConfirmedPost(c echo.Context) error {
 	if s != nil{
 		userUid = fmt.Sprintf("%v", s.Values["uid"])
 	}
-	log.Println(userUid)
 	if len(userUid) < 6{
 		return c.Render(http.StatusBadRequest, "error.html",structs.Error{StatusCode:http.StatusBadRequest,
 			Message:"連携するにマルチログインにログインしてください"})
