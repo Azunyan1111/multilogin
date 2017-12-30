@@ -11,6 +11,7 @@ test:
 
 start:
 	make test
+	docker-compose stop
 	docker-compose up
 
 fmt:
