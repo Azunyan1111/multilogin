@@ -6,7 +6,7 @@ import (
 	"log"
 )
 
-func RegisterNewUser(user structs.User)(string,error) {
+func RegisterNewUser(user structs.Usered)(string,error) {
 	uid, err := mysql.InsertUser(user)
 	if err != nil {
 		return "",err
@@ -39,7 +39,7 @@ func RegisterNewUser(user structs.User)(string,error) {
 	return uid, err
 }
 
-func UpdateNewUser(user structs.User)(error) {
+func UpdateNewUser(user structs.Usered)(error) {
 	if user.UserName != "" {
 		if err := mysql.UpdateUserName(user.Uid, user.UserName); err != nil {
 			return  err

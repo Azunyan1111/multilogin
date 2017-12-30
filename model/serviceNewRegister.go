@@ -6,7 +6,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func RegisterNewService(service structs.Service) error {
+func RegisterNewService(service structs.Serviced) error {
 	service.Token = uuid.New().String()
 	service.Secret = uuid.New().String()
 	uid, err := mysql.InsertService(service)
