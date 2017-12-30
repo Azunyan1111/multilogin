@@ -28,7 +28,7 @@ func TestGetUserNew(t *testing.T) {
 func TestPostUserNew(t *testing.T) {
 	mysql.DataBaseInit()
 	f := make(url.Values)
-	var user structs.User
+	var user structs.Usered
 	user.Email = "bar@bar.com"
 	user.UserName = "TestUser114514"
 	user.Image = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Bar-P1030319.jpg/1200px-Bar-P1030319.jpg"
@@ -56,10 +56,15 @@ func TestPostUserNew(t *testing.T) {
 		})
 		assert.Equal(t, "登録完了", text)
 	}
-	sqlUser, err := mysql.SelectUserByTestUser()
-	if err != nil {
-		panic(err)
-	}
+
+	sqlUser := structs.User{}
+	orm := mysql.GetOrm()
+	orm.First(&sqlUser,"user = ?", user.UserName)
+
+	//sqlUser, err := mysql.SelectUserByTestUser()
+	//if err != nil {
+	//	panic(err)
+	//}
 	assert.Equal(t, user.UserName, sqlUser.UserName)
 	assert.Equal(t, user.Email, sqlUser.Email)
 	assert.Equal(t, user.Image, sqlUser.Image)

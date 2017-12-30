@@ -25,7 +25,7 @@ func TestSelectUserByUuid(t *testing.T) {
 }
 
 func TestInsertUser(t *testing.T) {
-	var user structs.User
+	var user structs.Usered
 	user.UserName = "涼風青葉"
 	user.Email = "aoba@eaglejump.co.jp"
 	uid, err := InsertUser(user)

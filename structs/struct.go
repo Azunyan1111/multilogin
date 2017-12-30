@@ -1,42 +1,48 @@
 package structs
 
 type Register interface {
-	RegisterNewUser(user User) error
-	UpdateNewUser(user User) error
-	RegisterService(user User) error
-	UpdateService(user User) error
+	RegisterNewUser(user Usered) error
+	UpdateNewUser(user Usered) error
+	RegisterService(user Usered) error
+	UpdateService(user Usered) error
 }
 
 type MySql interface {
 	DataBaseInit() error
 
-	// Service
-	InsertNewUser(user User) error
-	UpdateUser(user User) error
+	// Serviced
+	InsertNewUser(user Usered) error
+	UpdateUser(user Usered) error
 
-	// Service
+	// Serviced
 	InsertService() error
 	UpdateService() error
 }
 
 type UserNewPage struct {
-	User    User
+	User    Usered
 	Message string
 	Csrf    string
 }
 type ServiceNewPage struct {
-	Service Service
+	Service Serviced
 	Message string
 	Csrf    string
 }
 type UserMyPage struct {
-	User    User
-	Service []Service
+	User    Usered
+	Service []Serviced
+	Message string
+	Csrf    string
+}
+type ConfirmedPage struct {
+	User    Usered
+	Service Serviced
 	Message string
 	Csrf    string
 }
 
-type User struct {
+type Usered struct {
 	Uid       string
 	UserName  string
 	Email     string
@@ -49,9 +55,10 @@ type User struct {
 	Address   string
 	CreatedAt string
 	UpdatedAt string
+	DeletedAt    string
 }
 
-type Service struct {
+type Serviced struct {
 	Uid         string
 	ServiceName string
 	Email       string
@@ -69,10 +76,16 @@ type Service struct {
 	UserAddress  bool
 	CreatedAt    string
 	UpdatedAt    string
+	DeletedAt    string
 }
 
 type Confirmed struct {
 	Id string
 	UserUid string
 	ServiceUid string
+}
+
+type Error struct {
+	StatusCode int
+	Message string
 }

@@ -6,9 +6,11 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/google/uuid"
 	"os"
+	"github.com/jinzhu/gorm"
 )
 
 var MyDB *sql.DB
+var MyOrm *gorm.DB
 
 func DataBaseInit() error {
 	dataSource := os.Getenv("DOCKER_DATABASE_URL")
@@ -17,7 +19,15 @@ func DataBaseInit() error {
 	if err != nil {
 		return err
 	}
+	MyOrm, err = gorm.Open("mysql", dataSource)
+	if err != nil {
+		panic(err)
+	}
 	return nil
+}
+
+func GetOrm() *gorm.DB{
+	return MyOrm
 }
 
 // Select文を実行するとRowsAffectedに0が帰って来る
@@ -33,44 +43,42 @@ func ConnectionTest() (int64, error) {
 	return ra, nil
 }
 
-func SelectUserByUuid(uuid string) (structs.User, error) {
-	row := MyDB.QueryRow("select * from users where uuid = ?;", uuid)
-	var dataBaseId int
-	var user structs.User
-	if err := row.Scan(&dataBaseId, &user.Uid, &user.UserName, &user.Image, &user.Age, &user.Birthday, &user.Email,
-		&user.EmailOK, &user.Phone, &user.PhoneOK, &user.Address, &user.CreatedAt, &user.UpdatedAt); err != nil {
-		return structs.User{}, err
+func SelectUserByUuid(uuid string) (structs.Usered, error) {
+	row := MyDB.QueryRow("select user,uuid from users where uuid = ?;", uuid)
+	var user structs.Usered
+	if err := row.Scan(&user.UserName,&user.Uid); err != nil {
+		return structs.Usered{}, err
 	}
 	return user, nil
 }
 
-func SelectConfirmedByUid(uuid string) ([]structs.Service, error) {
+func SelectConfirmedByUid(uuid string) ([]structs.Serviced, error) {
 	rows, err := MyDB.Query("select * from confirmed_service where user_uuid = ?;", uuid)
 	if err != nil {
-		return []structs.Service{}, err
+		return []structs.Serviced{}, err
 	}
 	var confirmeds []structs.Confirmed
 	for rows.Next() {
 		var dataBaseId int
 		var confirmed structs.Confirmed
 		if err := rows.Scan(&dataBaseId, &confirmed.UserUid, &confirmed.ServiceUid); err != nil{
-			return []structs.Service{}, err
+			return []structs.Serviced{}, err
 		}
 		confirmeds = append(confirmeds, confirmed)
 	}
-	var services []structs.Service
+	var services []structs.Serviced
 	for _, con := range confirmeds{
-		var service structs.Service
+		var service structs.Serviced
 		row := MyDB.QueryRow("select (`name`) from service where uuid = ?;", con.ServiceUid)
 		if err := row.Scan(&service.ServiceName); err != nil{
-			return []structs.Service{}, err
+			return []structs.Serviced{}, err
 		}
 		services = append(services, service)
 	}
 	return services, nil
 }
 
-func InsertUser(user structs.User) (string, error) {
+func InsertUser(user structs.Usered) (string, error) {
 	uid := uuid.New()
 	_, err := MyDB.Exec("INSERT INTO `users` (`uuid`, `user`, `email`) VALUES (?, ?, ?);", uid, user.UserName, user.Email)
 	if err != nil {
@@ -79,7 +87,7 @@ func InsertUser(user structs.User) (string, error) {
 	return uid.String(), nil
 }
 
-func InsertService(service structs.Service) (string, error) {
+func InsertService(service structs.Serviced) (string, error) {
 	uid := uuid.New()
 	_, err := MyDB.Exec("INSERT INTO `service` (`uuid`, `name`, `email`, `token`, `secret`) VALUES (?, ?, ?,?,?);", uid, service.ServiceName, service.Email, service.Token, service.Secret)
 	if err != nil {
@@ -110,25 +118,25 @@ func DeleteUserByTestService() error {
 	}
 	return nil
 }
-func SelectUserByTestUser() (structs.User, error) {
+func SelectUserByTestUser() (structs.Usered, error) {
 	row := MyDB.QueryRow("select * from users where user = 'TestUser114514';")
 	var dataBaseId int
-	var user structs.User
+	var user structs.Usered
 	if err := row.Scan(&dataBaseId, &user.Uid, &user.UserName, &user.Image, &user.Age, &user.Birthday, &user.Email,
 		&user.EmailOK, &user.Phone, &user.PhoneOK, &user.Address, &user.CreatedAt, &user.UpdatedAt); err != nil {
-		return structs.User{}, err
+		return structs.Usered{}, err
 	}
 	return user, nil
 }
 
-func SelectUserByTestService() (structs.Service, error) {
-	row := MyDB.QueryRow("select * from service where name = 'TestUser114514';")
+func SelectUserByTestService() (structs.Serviced, error) {
+	row := MyDB.QueryRow("select `id`, `uuid`, `name`, `email`, `url`, `url_callback`, `token`, `secret`, `p_name`, `p_image`, `p_age`, `p_birthday`, `p_email`, `p_phone`, `p_address`, `created_at`, `updated_at`, `deleted_at` from service where name = 'TestUser114514';")
 	var dataBaseId int
-	var user structs.Service
+	var user structs.Serviced
 	if err := row.Scan(&dataBaseId, &user.Uid, &user.ServiceName, &user.Email, &user.Url, &user.CallbackUrl, &user.Token,
 		&user.Secret, &user.UserName, &user.UserImage, &user.UserAge, &user.UserBirthday, &user.UserEmail,
-		&user.UserPhone, &user.UserAddress, &user.CreatedAt, &user.UpdatedAt); err != nil {
-		return structs.Service{}, err
+		&user.UserPhone, &user.UserAddress, &user.CreatedAt, &user.UpdatedAt, &user.DeletedAt); err != nil {
+		return structs.Serviced{}, err
 	}
 	return user, nil
 }
@@ -205,7 +213,7 @@ func UpdateUserAddress(uid string, address string) error {
 	return nil
 }
 
-// Service
+// Serviced
 func UpdateServiceUrlByUid(uid string, url string) error {
 	_, err := MyDB.Exec("UPDATE service SET url = ? WHERE uuid = ?;", url, uid)
 	if err != nil {

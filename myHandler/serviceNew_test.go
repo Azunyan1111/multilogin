@@ -28,11 +28,11 @@ func TestGetServiceNew(t *testing.T) {
 func TestPostServiceNew(t *testing.T) {
 	mysql.DataBaseInit()
 	f := make(url.Values)
-	var user structs.Service
-	user.Email = "bar@bar.com"
+	var user structs.Serviced
+	user.Email = "test@test.com"
 	user.ServiceName = "TestUser114514"
-	user.Url = "http://bar.com"
-	user.CallbackUrl = "http://bar.com/callback"
+	user.Url = "http://test.com"
+	user.CallbackUrl = "http://test.com/callback"
 
 	user.UserName = true
 	user.UserEmail = true
@@ -68,10 +68,10 @@ func TestPostServiceNew(t *testing.T) {
 		assert.Equal(t, "登録完了", text)
 	}
 
-	sqlUser, err := mysql.SelectUserByTestService()
-	if err != nil {
-		panic(err)
-	}
+	sqlUser := structs.Service{}
+	orm := mysql.GetOrm()
+	orm.First(&sqlUser,"name = ?", user.ServiceName)
+
 	assert.Equal(t, user.Email, sqlUser.Email)
 	assert.Equal(t, user.ServiceName, sqlUser.ServiceName)
 	assert.Equal(t, user.Url, sqlUser.Url)
