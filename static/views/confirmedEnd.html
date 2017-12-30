@@ -1,0 +1,8 @@
+{{template "header"}}
+        {{if .Message}}
+<div class="alert alert-warning" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="閉じる"><span aria-hidden="true">×</span></button>
+    <strong>warning</strong>{{.Message}}</div>
+        {{end}}
+                    <h1 id="test_ConfirmedNew">サービス連携が完了しました。サービスに戻ります。</h1>
+{{template "footer"}}

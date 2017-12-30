@@ -73,20 +73,22 @@ func TestGetConfirmedPost(t *testing.T) {
 		return c.String(http.StatusOK, "test")
 	})
 	h(c)
-	/*//
+
+	orm := mysql.GetOrm()
+	var confirmedService structs.ConfirmedService
+
 	if assert.NoError(t, GetConfirmedPost(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)
-		isNotFound,_ := mysql.IsNotFoundConfirmedByuUserUidAndServiceUid(userUid,serviceUid)
-		assert.Equal(t,true,isNotFound)
-		//assert.EqualError(t,errors.New(""),err.Error())
+		orm.Find(&confirmedService, "user_uuid = ? and service_uuid = ?", userUid, serviceUid)
+		assert.Equal(t,userUid,confirmedService.UserUid)
+		assert.Equal(t,serviceUid,confirmedService.ServiceUid)
+
 		doc, _ := goquery.NewDocumentFromReader(rec.Result().Body)
-		var text string
-		doc.Find("#test_ConfirmedNew").Each(func(_ int, s *goquery.Selection) {
-			text = s.Text()
-		})
-		assert.Equal(t, "サービス連携", text)
+		assert.Empty(t,doc.Find("#StatusCode").Text())
+		assert.Empty(t,doc.Find("#ErrorMessage").Text())
+		assert.Equal(t, "サービス連携が完了しました。サービスに戻ります。", doc.Find("#test_ConfirmedNew").Text())
 	}
-	//*/
+	orm.Delete(&confirmedService)
 }
 
 

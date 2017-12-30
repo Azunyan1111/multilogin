@@ -1,15 +1,23 @@
 package structs
 
-import "github.com/jinzhu/gorm"
+import (
+	"time"
+)
 
 type ConfirmedService struct {
-	GormModel gorm.Model
-	UserUid string	`gorm:"column:user_uuid"`
+	ID        uint `gorm:"column:id"`
+	CreatedAt time.Time `gorm:"column:created_at"`
+	UpdatedAt time.Time `gorm:"column:updated_at"`
+	DeletedAt *time.Time `gorm:"column:deleted_at"`
+	UserUid    string	`gorm:"column:user_uuid"`
 	ServiceUid string	`gorm:"column:service_uuid"`
 }
 
 type Service struct {
-	GormModel gorm.Model
+	ID        uint `gorm:"column:id"`
+	CreatedAt time.Time `gorm:"column:created_at"`
+	UpdatedAt time.Time `gorm:"column:updated_at"`
+	DeletedAt *time.Time `gorm:"column:deleted_at"`
 
 	Uid         string `gorm:"column:uuid"`
 	ServiceName string `gorm:"column:name"`
@@ -29,7 +37,10 @@ type Service struct {
 }
 
 type User struct {
-	GormModel gorm.Model
+	ID        uint `gorm:"column:id"`
+	CreatedAt time.Time `gorm:"column:created_at"`
+	UpdatedAt time.Time `gorm:"column:updated_at"`
+	DeletedAt *time.Time `gorm:"column:deleted_at"`
 
 	Uid       string `gorm:"column:uuid"`
 	UserName  string `gorm:"column:user"`

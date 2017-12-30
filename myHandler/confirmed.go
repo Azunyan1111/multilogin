@@ -19,12 +19,12 @@ func GetConfirmedNew(c echo.Context) error {
 	if err != nil{
 		panic(err)
 	}
-	var uid string
+	var userUid string
 	if s != nil{
-		uid = fmt.Sprintf("%v", s.Values["uid"])
+		userUid = fmt.Sprintf("%v", s.Values["uid"])
 	}
-	log.Println(uid)
-	if len(uid) < 6{
+	log.Println(userUid)
+	if len(userUid) < 6{
 		return c.Render(http.StatusBadRequest, "error.html",structs.Error{StatusCode:http.StatusBadRequest,
 		Message:"連携するにマルチログインにログインしてください"})
 	}
@@ -32,7 +32,6 @@ func GetConfirmedNew(c echo.Context) error {
 	// サービス情報取得
 	orm := mysql.GetOrm()
 	var service structs.Service
-	orm.LogMode(true)
 	orm.Find(&service, "uuid = ?",serviceUid)
 	log.Println(service)
 	if service.ID == 0{
@@ -50,30 +49,46 @@ func GetConfirmedNew(c echo.Context) error {
 func GetConfirmedPost(c echo.Context) error {
 	// サービス存在確認
 	serviceUid := c.Param("serviceUid")
-	if !mysql.IsServiceByUuid(serviceUid){
-		log.Println("Not Serivce")
-		return c.Render(http.StatusBadRequest, "error.html", structs.Error{StatusCode:http.StatusBadRequest, Message:"Serviced not found"})
-	}
-	return c.Render(http.StatusBadRequest, "error.html", structs.Error{StatusCode:http.StatusBadRequest, Message:"Serviced not found"})
 
-	/*/
-	// セッション確認
-	s := session.Default(c)
-	var uid string
-	if s != nil{
-		log.Println("nil session")
-		uid = fmt.Sprintf("%v", s.Get("uid"))
+	// サービス情報取得
+	orm := mysql.GetOrm()
+	var service structs.Service
+	orm.Find(&service, "uuid = ?",serviceUid)
+	log.Println(service)
+	if service.ID == 0{
+		return c.Render(http.StatusBadRequest, "error.html",structs.Error{StatusCode:http.StatusBadRequest,
+			Message:"連携するサービス情報が存在しないか、URLが間違っています。"})
 	}
-	if len(uid) < 5{
-		return c.Render(http.StatusBadRequest, "error.html", structs.Error{StatusCode:http.StatusBadRequest, Message:"Not Login. Please login."})
+
+	// セッション確認
+	s, err := session.Get("session", c)
+	if err != nil{
+		panic(err)
+	}
+	var userUid string
+	if s != nil{
+		userUid = fmt.Sprintf("%v", s.Values["uid"])
+	}
+	log.Println(userUid)
+	if len(userUid) < 6{
+		return c.Render(http.StatusBadRequest, "error.html",structs.Error{StatusCode:http.StatusBadRequest,
+			Message:"連携するにマルチログインにログインしてください"})
 	}
 
 	// 連携情報登録
-	err := mysql.InsertConfirmedByUidAndUid(uid,serviceUid)
-	if err != nil{
-		return c.Render(http.StatusBadRequest, "error.html", structs.Error{StatusCode:http.StatusInternalServerError, Message:"Insert Not success." + err.Error()})
+	var confirmedService structs.ConfirmedService
+	confirmedService.ServiceUid = serviceUid
+	confirmedService.UserUid = userUid
+	orm.NewRecord(&confirmedService)
+	orm.Create(&confirmedService)
+	// 連携登録確認
+	var confirmedServiceCheck structs.ConfirmedService
+	orm.Find(&confirmedServiceCheck,"user_uuid = ? and service_uuid = ?",userUid,serviceUid)
+
+	if confirmedService.ID == 0{
+		return c.Render(http.StatusBadRequest, "error.html", structs.Error{StatusCode:http.StatusInternalServerError,
+		Message:"連携データを正しく登録することができませんでした。再試行してください。" + err.Error()})
 	}
-	// サービスのコールバックURLへ飛ばす
-	return c.Render(http.StatusOK, "confirmedNew.html", nil)
-	//*/
+	// TODO:サービスのコールバックURLへ飛ばす
+	return c.Render(http.StatusOK, "confirmedEnd.html", nil)
 }

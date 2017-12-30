@@ -37,7 +37,7 @@ type UserMyPage struct {
 }
 type ConfirmedPage struct {
 	User    Usered
-	Service Serviced
+	Service Service
 	Message string
 	Csrf    string
 }
