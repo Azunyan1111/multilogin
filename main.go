@@ -62,6 +62,10 @@ func main() {
 	e.POST("/service/new", myHandler.PostServiceNew)
 	e.GET("/service/update", myHandler.HelloWorld)
 
+	// 連携
+	e.GET("/confirmed/:serviceUid", myHandler.GetConfirmedNew)
+	e.POST("/confirmed/:serviceUid", myHandler.GetConfirmedPost)
+
 	// API
 	e.GET("/api/user/name", myHandler.HelloWorld)
 	e.GET("/api/user/image", myHandler.HelloWorld)
