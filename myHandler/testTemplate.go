@@ -7,6 +7,8 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"strings"
+	"github.com/labstack/echo-contrib/session"
+	"github.com/gorilla/sessions"
 )
 
 type Template struct {
@@ -20,6 +22,7 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Con
 func testTemplateGet(target string) (e *echo.Echo, req *http.Request, rec *httptest.ResponseRecorder) {
 	e = echo.New()
 
+	e.Use(session.Middleware(sessions.NewCookieStore([]byte("secret"))))
 	temp := &Template{
 		templates: template.Must(template.ParseGlob("../static/views/*.html")),
 	}
@@ -33,6 +36,7 @@ func testTemplateGet(target string) (e *echo.Echo, req *http.Request, rec *httpt
 func testTemplatePost(target string, json string) (e *echo.Echo, req *http.Request, rec *httptest.ResponseRecorder) {
 	e = echo.New()
 
+	e.Use(session.Middleware(sessions.NewCookieStore([]byte("secret"))))
 	temp := &Template{
 		templates: template.Must(template.ParseGlob("../static/views/*.html")),
 	}

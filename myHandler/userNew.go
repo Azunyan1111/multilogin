@@ -6,20 +6,24 @@ import (
 	"github.com/Azunyan1111/multilogin/structs"
 	"github.com/labstack/echo"
 	"net/http"
-	"github.com/ipfans/echo-session"
+	"github.com/labstack/echo-contrib/session"
 )
 
 func GetUserNew(c echo.Context) error {
 	// セッション確認
-	s := session.Default(c)
-	var uid string
+	s, err := session.Get("session", c)
+	if err != nil{
+		panic(err)
+	}
+	var userUid string
 	if s != nil{
-		uid = fmt.Sprintf("%v", s.Get("uid"))
+		userUid = fmt.Sprintf("%v", s.Values["uid"])
 	}
-	if len(uid) > 5{
-		// Not Login
-		return c.Redirect(http.StatusTemporaryRedirect, "/user/mypage")
+	if len(userUid) > 6{
+		return c.Render(http.StatusBadRequest, "error.html",structs.Error{StatusCode:http.StatusBadRequest,
+			Message:"すでにログインしています。動作が不安定な場合はブラウザのクッキーを削除してください。"})
 	}
+
 	csrf := fmt.Sprintf("%v", c.Get("csrf"))
 	return c.Render(http.StatusOK, "userNew.html", structs.UserNewPage{Csrf: csrf})
 }
@@ -51,11 +55,13 @@ func PostUserNew(c echo.Context) error {
 	}
 
 	// セッションに自分のuuidをつけて返す
-	s := session.Default(c)
-	if s != nil{
-		s.Set("uid", uid)
-		s.Save()
+	// セッション確認
+	s, err := session.Get("session", c)
+	if err != nil{
+		panic(err)
 	}
+	s.Values["uid"] = uid
+	s.Save(c.Request(),c.Response().Writer)
 
 	return c.Render(http.StatusTemporaryRedirect, "userNewEnd.html", "")
 }

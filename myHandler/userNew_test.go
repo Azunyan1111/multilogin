@@ -8,11 +8,24 @@ import (
 	"net/http"
 	"net/url"
 	"testing"
+	"github.com/gorilla/sessions"
+	"github.com/labstack/echo-contrib/session"
+	"github.com/labstack/echo"
 )
 
 func TestGetUserNew(t *testing.T) {
 	e, req, rec := testTemplateGet("/user/new")
 	c := e.NewContext(req, rec)
+
+	// session
+	mw := session.Middleware(sessions.NewCookieStore([]byte("secret")))
+	h := mw(func(c echo.Context) error {
+		sess, _ := session.Get("session", c)
+		sess.Values["uid"] = ""
+		sess.Save(c.Request(), c.Response())
+		return nil
+	})
+	h(c)
 
 	if assert.NoError(t, GetUserNew(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)
@@ -47,6 +60,16 @@ func TestPostUserNew(t *testing.T) {
 	e, req, rec := testTemplatePost("/user/new", f.Encode())
 	c := e.NewContext(req, rec)
 
+	// session
+	mw := session.Middleware(sessions.NewCookieStore([]byte("secret")))
+	h := mw(func(c echo.Context) error {
+		sess, _ := session.Get("session", c)
+		sess.Values["uid"] = ""
+		sess.Save(c.Request(), c.Response())
+		return nil
+	})
+	h(c)
+
 	if assert.NoError(t, PostUserNew(c)) {
 		assert.Equal(t, http.StatusTemporaryRedirect, rec.Code)
 		doc, _ := goquery.NewDocumentFromReader(rec.Result().Body)
@@ -61,10 +84,6 @@ func TestPostUserNew(t *testing.T) {
 	orm := mysql.GetOrm()
 	orm.First(&sqlUser,"user = ?", user.UserName)
 
-	//sqlUser, err := mysql.SelectUserByTestUser()
-	//if err != nil {
-	//	panic(err)
-	//}
 	assert.Equal(t, user.UserName, sqlUser.UserName)
 	assert.Equal(t, user.Email, sqlUser.Email)
 	assert.Equal(t, user.Image, sqlUser.Image)

@@ -23,7 +23,6 @@ func TestGetConfirmedNew(t *testing.T) {
 	mysql.DataBaseInit()
 
 	e, req, rec := testTemplateGet("/")
-	e.Use(session.Middleware(sessions.NewCookieStore([]byte("secret"))))
 	c := e.NewContext(req, rec)
 
 
@@ -37,7 +36,7 @@ func TestGetConfirmedNew(t *testing.T) {
 		sess, _ := session.Get("session", c)
 		sess.Values["uid"] = userUid
 		sess.Save(c.Request(), c.Response())
-		return c.String(http.StatusOK, "test")
+		return nil
 	})
 	h(c)
 
@@ -70,7 +69,7 @@ func TestGetConfirmedPost(t *testing.T) {
 		sess, _ := session.Get("session", c)
 		sess.Values["uid"] = userUid
 		sess.Save(c.Request(), c.Response())
-		return c.String(http.StatusOK, "test")
+		return nil
 	})
 	h(c)
 

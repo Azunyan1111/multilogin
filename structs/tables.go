@@ -45,12 +45,12 @@ type User struct {
 	Uid       string `gorm:"column:uuid"`
 	UserName  string `gorm:"column:user"`
 	Email     string `gorm:"column:email"`
-	EmailOK   bool `gorm:"column:email_ok"`
+	EmailOK   int `gorm:"column:email_ok"`
 	Image     string `gorm:"column:image"`
 	Age       string `gorm:"column:age"`
 	Birthday  string `gorm:"column:birthday"`
 	Phone     string `gorm:"column:phone"`
-	PhoneOK   bool `gorm:"column:phone_ok"`
+	PhoneOK   int `gorm:"column:phone_ok"`
 	Address   string `gorm:"column:address"`
 }
 

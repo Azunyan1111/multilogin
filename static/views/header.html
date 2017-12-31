@@ -49,5 +49,10 @@
         </ul>
     </div>
 </nav>
+{{if .Message}}
+<div class="alert alert-warning" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="閉じる"><span aria-hidden="true">×</span></button>
+    <strong>warning</strong>{{.Message}}</div>
+{{end}}
         <div id="new" class="container">
 {{end}}
