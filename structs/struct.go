@@ -30,8 +30,8 @@ type ServiceNewPage struct {
 	Csrf    string
 }
 type UserMyPage struct {
-	User    Usered
-	Service []Serviced
+	User    User
+	Service []Service
 	Message string
 	Csrf    string
 }

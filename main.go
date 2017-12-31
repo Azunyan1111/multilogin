@@ -9,7 +9,6 @@ import (
 	"html/template"
 	"io"
 	"os"
-	"github.com/gorilla/securecookie"
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo-contrib/session"
 )
@@ -40,7 +39,7 @@ func main() {
 	}))
 	e.Use(middleware.Gzip())
 	e.Use(middleware.Secure())
-	e.Use(session.Middleware(sessions.NewCookieStore(securecookie.GenerateRandomKey(64))))
+	e.Use(session.Middleware(sessions.NewCookieStore([]byte("key")/*securecookie.GenerateRandomKey(64)*/)))
 
 
 	e.Use(customHeader)
