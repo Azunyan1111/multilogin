@@ -83,10 +83,10 @@ func PostServiceNew(c echo.Context) error {
 	return c.Render(http.StatusTemporaryRedirect, "serviceNewEnd.html", "")
 }
 
-func checkbox(check string) bool {
+func checkbox(check string) int {
 	if check == "on" {
-		return true
+		return 1
 	} else {
-		return false
+		return 0
 	}
 }

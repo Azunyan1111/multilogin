@@ -57,7 +57,8 @@ func main() {
 	// サービス
 	e.GET("/service/new", myHandler.GetServiceNew)
 	e.POST("/service/new", myHandler.PostServiceNew)
-	e.GET("/service/update", myHandler.HelloWorld)
+	e.GET("/service/mypage", myHandler.GetServiceMyPage)
+	e.POST("/service/mypage", myHandler.PostServiceMyPage)
 
 	// 連携
 	e.GET("/confirmed/:serviceUid", myHandler.GetConfirmedNew)

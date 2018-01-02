@@ -35,6 +35,11 @@ type UserMyPage struct {
 	Message string
 	Csrf    string
 }
+type ServiceMyPage struct {
+	Service Service
+	Message string
+	Csrf    string
+}
 type ConfirmedPage struct {
 	User    Usered
 	Service Service

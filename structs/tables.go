@@ -27,13 +27,13 @@ type Service struct {
 	Token       string `gorm:"column:token"`
 	Secret      string `gorm:"column:secret"`
 
-	UserName     bool `gorm:"column:p_name"`
-	UserEmail    bool `gorm:"column:p_email"`
-	UserImage    bool `gorm:"column:p_image"`
-	UserAge      bool `gorm:"column:p_age"`
-	UserBirthday bool `gorm:"column:p_birthday"`
-	UserPhone    bool `gorm:"column:p_phone"`
-	UserAddress  bool `gorm:"column:p_address"`
+	UserName     int `gorm:"column:p_name"`
+	UserEmail    int `gorm:"column:p_email"`
+	UserImage    int `gorm:"column:p_image"`
+	UserAge      int `gorm:"column:p_age"`
+	UserBirthday int `gorm:"column:p_birthday"`
+	UserPhone    int `gorm:"column:p_phone"`
+	UserAddress  int `gorm:"column:p_address"`
 }
 
 type User struct {

@@ -95,18 +95,19 @@ func TestPostServiceNew(t *testing.T) {
 	orm := mysql.GetOrm()
 	orm.First(&sqlUser,"name = ?", user.ServiceName)
 
+
 	assert.Equal(t, user.Email, sqlUser.Email)
 	assert.Equal(t, user.ServiceName, sqlUser.ServiceName)
 	assert.Equal(t, user.Url, sqlUser.Url)
 	assert.Equal(t, user.CallbackUrl, sqlUser.CallbackUrl)
 
-	assert.Equal(t, user.UserName, sqlUser.UserName)
-	assert.Equal(t, user.UserEmail, sqlUser.UserEmail)
-	assert.Equal(t, user.UserImage, sqlUser.UserImage)
-	assert.Equal(t, user.UserAge, sqlUser.UserAge)
-	assert.Equal(t, user.UserBirthday, sqlUser.UserBirthday)
-	assert.Equal(t, user.UserPhone, sqlUser.UserPhone)
-	assert.Equal(t, user.UserAddress, sqlUser.UserAddress)
+	assert.Equal(t, boolToInt(user.UserName), sqlUser.UserName)
+	assert.Equal(t, boolToInt(user.UserEmail), sqlUser.UserEmail)
+	assert.Equal(t, boolToInt(user.UserImage), sqlUser.UserImage)
+	assert.Equal(t, boolToInt(user.UserAge), sqlUser.UserAge)
+	assert.Equal(t, boolToInt(user.UserBirthday), sqlUser.UserBirthday)
+	assert.Equal(t, boolToInt(user.UserPhone), sqlUser.UserPhone)
+	assert.Equal(t, boolToInt(user.UserAddress), sqlUser.UserAddress)
 
 	if err := mysql.DeleteUserByTestService(); err != nil {
 		panic(err)
