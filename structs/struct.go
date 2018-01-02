@@ -25,7 +25,7 @@ type UserNewPage struct {
 	Csrf    string
 }
 type ServiceNewPage struct {
-	Service Serviced
+	Service Service
 	Message string
 	Csrf    string
 }

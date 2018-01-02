@@ -8,11 +8,24 @@ import (
 	"net/http"
 	"net/url"
 	"testing"
+	"github.com/labstack/echo-contrib/session"
+	"github.com/labstack/echo"
+	"github.com/gorilla/sessions"
 )
 
 func TestGetServiceNew(t *testing.T) {
 	e, req, rec := testTemplateGet("/service/new")
 	c := e.NewContext(req, rec)
+
+	// session
+	mw := session.Middleware(sessions.NewCookieStore([]byte("secret")))
+	h := mw(func(c echo.Context) error {
+		sess, _ := session.Get("session", c)
+		sess.Values["uid"] = ""
+		sess.Save(c.Request(), c.Response())
+		return nil
+	})
+	h(c)
 
 	if assert.NoError(t, GetServiceNew(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)
@@ -57,6 +70,16 @@ func TestPostServiceNew(t *testing.T) {
 
 	e, req, rec := testTemplatePost("/service/new", f.Encode())
 	c := e.NewContext(req, rec)
+
+	// session
+	mw := session.Middleware(sessions.NewCookieStore([]byte("secret")))
+	h := mw(func(c echo.Context) error {
+		sess, _ := session.Get("session", c)
+		sess.Values["uid"] = ""
+		sess.Save(c.Request(), c.Response())
+		return nil
+	})
+	h(c)
 
 	if assert.NoError(t, PostServiceNew(c)) {
 		assert.Equal(t, http.StatusTemporaryRedirect, rec.Code)
