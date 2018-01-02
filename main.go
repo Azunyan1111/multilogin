@@ -49,6 +49,8 @@ func main() {
 
 	// ルーティング
 	e.GET("/", myHandler.HelloWorld)
+	// ログアウト
+	e.GET("/logout", myHandler.Logout)
 	// ユーザー
 	e.GET("/user/new", myHandler.GetUserNew)
 	e.POST("/user/new", myHandler.PostUserNew)
