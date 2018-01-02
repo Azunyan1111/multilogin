@@ -51,7 +51,6 @@ func PostServiceMyPage(c echo.Context) error {
 		serviceUid = fmt.Sprintf("%v", s.Values["uid"])
 	}
 	if len(serviceUid) < 6{
-		panic("service")
 		return c.Render(http.StatusBadRequest, "error.html",structs.Error{StatusCode:http.StatusBadRequest,
 			Message:"連携するにマルチログインにログインしてください"})
 	}
@@ -59,7 +58,6 @@ func PostServiceMyPage(c echo.Context) error {
 	var serviceMyPage structs.ServiceMyPage
 	rows := orm.Find(&serviceMyPage.Service,"uuid = ?", serviceUid).RowsAffected
 	if rows != 1{
-		panic("foo")
 		return c.Render(http.StatusBadRequest, "error.html",structs.Error{StatusCode:http.StatusBadRequest,
 			Message:"サービス管理者としてログインしていません。サービスの管理を行うには再度ログインしてください。"})
 	}

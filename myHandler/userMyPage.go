@@ -26,6 +26,10 @@ func GetUserMyPage(c echo.Context) error {
 		return c.Render(http.StatusBadRequest, "error.html",structs.Error{StatusCode:http.StatusBadRequest,
 			Message:"連携するにマルチログインにログインしてください"})
 	}
+	if orm.Find(structs.User{},"uuid = ?", userUid).RowsAffected != 1{
+		return c.Render(http.StatusBadRequest, "error.html",structs.Error{StatusCode:http.StatusBadRequest,
+			Message:"ユーザーとしてログインしていません。サービス管理者としてログインしている可能性があります。"})
+	}
 
 	// ユーザーデータ取得
 	var user structs.UserMyPage
@@ -68,6 +72,10 @@ func PostUserMyPage(c echo.Context) error {
 	if len(userUid) < 6{
 		return c.Render(http.StatusBadRequest, "error.html",structs.Error{StatusCode:http.StatusBadRequest,
 			Message:"連携するにマルチログインにログインしてください"})
+	}
+	if orm.Find(structs.User{},"uuid = ?", userUid).RowsAffected != 1{
+		return c.Render(http.StatusBadRequest, "error.html",structs.Error{StatusCode:http.StatusBadRequest,
+			Message:"ユーザーとしてログインしていません。サービス管理者としてログインしている可能性があります。"})
 	}
 
 	// ユーザーが入力した情報取得s
