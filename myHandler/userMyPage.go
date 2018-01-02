@@ -8,9 +8,8 @@ import (
 
 	"github.com/labstack/echo-contrib/session"
 	"github.com/Azunyan1111/multilogin/mysql"
-	"log"
 )
-// TODO:GetUseMyPageのユーザー取得をormで行う。
+
 func GetUserMyPage(c echo.Context) error {
 	orm := mysql.GetOrm()
 
@@ -32,7 +31,7 @@ func GetUserMyPage(c echo.Context) error {
 	var user structs.UserMyPage
 	orm.Find(&user.User,"uuid = ?", userUid)
 	if user.User.ID == 0 {
-		user.Message = "エラー | ユーザーデータが正しく登録できない可能性があります。次の項目を添えて管理者に問い合わせてください | " +  err.Error()
+		user.Message = "エラー | ユーザーデータが正しく登録できない可能性があります。"
 		return c.Render(http.StatusInternalServerError, "userMyPage.html", user)
 	}
 	// 連携データ取得
@@ -74,7 +73,6 @@ func PostUserMyPage(c echo.Context) error {
 	// ユーザーが入力した情報取得s
 	var oldUser structs.User
 	orm.Find(&oldUser, "uuid = ?", userUid)
-	log.Println(userUid)
 	var updateUser structs.User
 	updateUser = oldUser
 	updateUser.UserName = c.FormValue("InputUserName")
@@ -84,7 +82,6 @@ func PostUserMyPage(c echo.Context) error {
 	updateUser.Birthday = c.FormValue("InputBirthday")
 	updateUser.Phone = c.FormValue("InputPhone")
 	updateUser.Address = c.FormValue("InputAddress")
-	log.Println("aaaaaaaaaaaaaaaaaa",oldUser.Age, updateUser.Age)
 
 	if orm.Model(&oldUser).Updates(&updateUser).RowsAffected != 1{
 		var user  structs.UserMyPage

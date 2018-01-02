@@ -3,7 +3,6 @@ package model
 import (
 	"github.com/Azunyan1111/multilogin/mysql"
 	"github.com/Azunyan1111/multilogin/structs"
-	"log"
 )
 
 func RegisterNewUser(user structs.Usered)(string,error) {
@@ -56,9 +55,7 @@ func UpdateNewUser(user structs.Usered)(error) {
 		}
 	}
 	if user.Age != "" {
-		log.Println(user.Uid, "aaa" , user.Age)
 		if err := mysql.UpdateUserAge(user.Uid, user.Age); err != nil {
-			log.Println(err)
 			return  err
 		}
 	}
