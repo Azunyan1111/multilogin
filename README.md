@@ -11,6 +11,7 @@ MySQL
 Redis
 Docker-compose
 Makefile
+HMAC-SHA256 (API)
 ```
 
 # use
