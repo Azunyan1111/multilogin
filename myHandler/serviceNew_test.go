@@ -14,7 +14,7 @@ import (
 )
 
 func TestGetServiceNew(t *testing.T) {
-	e, req, rec := testTemplateGet("/service/new")
+	e, req, rec := TestTemplateGet("/service/new")
 	c := e.NewContext(req, rec)
 
 	// session
@@ -68,7 +68,7 @@ func TestPostServiceNew(t *testing.T) {
 	f.Set("InputUserPhone", checkString(user.UserPhone))
 	f.Set("InputUserAddress", checkString(user.UserAddress))
 
-	e, req, rec := testTemplatePost("/service/new", f.Encode())
+	e, req, rec := TestTemplatePost("/service/new", f.Encode())
 	c := e.NewContext(req, rec)
 
 	// session

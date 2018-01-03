@@ -8,7 +8,7 @@ import (
 )
 
 func TestHelloWorld(t *testing.T) {
-	e, req, rec := testTemplateGet("/")
+	e, req, rec := TestTemplateGet("/")
 	c := e.NewContext(req, rec)
 
 	if assert.NoError(t, HelloWorld(c)) {

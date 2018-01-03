@@ -15,7 +15,7 @@ import (
 var code string
 
 func TestGetLogin(t *testing.T) {
-	e, req, rec := testTemplateGet("/login")
+	e, req, rec := TestTemplateGet("/login")
 	c := e.NewContext(req, rec)
 
 	// session
@@ -46,7 +46,7 @@ func TestPostLogin(t *testing.T) {
 	user.Email = "god@god.com"
 	f.Set("InputEmail", user.Email)
 
-	e, req, rec := testTemplatePost("/login", f.Encode())
+	e, req, rec := TestTemplatePost("/login", f.Encode())
 	c := e.NewContext(req, rec)
 
 	// session

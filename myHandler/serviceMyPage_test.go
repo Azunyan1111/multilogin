@@ -19,7 +19,7 @@ import (
 
 func TestGetServiceMyPage(t *testing.T) {
 
-	e, req, rec := testTemplateGet("/service/mypage")
+	e, req, rec := TestTemplateGet("/service/mypage")
 	c := e.NewContext(req, rec)
 	// session
 	mw := session.Middleware(sessions.NewCookieStore([]byte("secret")))
@@ -67,7 +67,7 @@ func TestPostServiceMyPage(t *testing.T) {
 	f.Set("InputUserAddress", boolToString(testService.UserAddress))
 
 
-	e, req, rec := testTemplatePost("/service/mypage",f.Encode())
+	e, req, rec := TestTemplatePost("/service/mypage",f.Encode())
 	c := e.NewContext(req, rec)
 	// session
 	mw := session.Middleware(sessions.NewCookieStore([]byte("secret")))

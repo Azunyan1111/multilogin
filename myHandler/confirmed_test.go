@@ -22,7 +22,7 @@ const(
 func TestGetConfirmedNew(t *testing.T) {
 	mysql.DataBaseInit()
 
-	e, req, rec := testTemplateGet("/")
+	e, req, rec := TestTemplateGet("/")
 	c := e.NewContext(req, rec)
 
 
@@ -57,7 +57,7 @@ func TestGetConfirmedNew(t *testing.T) {
 func TestGetConfirmedPost(t *testing.T) {
 	mysql.DataBaseInit()
 
-	e, req, rec := testTemplateGet("/")
+	e, req, rec := TestTemplateGet("/")
 
 	c := e.NewContext(req, rec)
 	// url param
@@ -111,7 +111,7 @@ func TestGetConfirmedPost2(t *testing.T){
 
 func TestPostConfirmedDelete(t *testing.T) {
 	orm := mysql.GetOrm()
-	e, req, rec := testTemplatePost("/confirmed/delete/"+ serviceUid,"")
+	e, req, rec := TestTemplatePost("/confirmed/delete/"+ serviceUid,"")
 	c := e.NewContext(req, rec)
 
 	c.SetParamNames("serviceUid")

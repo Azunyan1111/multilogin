@@ -14,7 +14,7 @@ import (
 )
 
 func TestGetUserNew(t *testing.T) {
-	e, req, rec := testTemplateGet("/user/new")
+	e, req, rec := TestTemplateGet("/user/new")
 	c := e.NewContext(req, rec)
 
 	// session
@@ -57,7 +57,7 @@ func TestPostUserNew(t *testing.T) {
 	f.Set("InputPhone", user.Phone)
 	f.Set("InputAddress", user.Address)
 
-	e, req, rec := testTemplatePost("/user/new", f.Encode())
+	e, req, rec := TestTemplatePost("/user/new", f.Encode())
 	c := e.NewContext(req, rec)
 
 	// session

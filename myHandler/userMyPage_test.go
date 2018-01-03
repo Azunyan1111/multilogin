@@ -19,7 +19,7 @@ import (
 
 func TestGetUserMyPage(t *testing.T) {
 
-	e, req, rec := testTemplateGet("/user/mypage")
+	e, req, rec := TestTemplateGet("/user/mypage")
 	c := e.NewContext(req, rec)
 	// session
 	mw := session.Middleware(sessions.NewCookieStore([]byte("secret")))
@@ -64,7 +64,7 @@ func TestPostUserMyPage(t *testing.T) {
 	f.Set("InputAddress", testUser.Address)
 
 
-	e, req, rec := testTemplatePost("/user/mypage",f.Encode())
+	e, req, rec := TestTemplatePost("/user/mypage",f.Encode())
 	c := e.NewContext(req, rec)
 	// session
 	mw := session.Middleware(sessions.NewCookieStore([]byte("secret")))

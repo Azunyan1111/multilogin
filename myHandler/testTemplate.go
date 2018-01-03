@@ -19,7 +19,7 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Con
 	return t.templates.ExecuteTemplate(w, name, data)
 }
 
-func testTemplateGet(target string) (e *echo.Echo, req *http.Request, rec *httptest.ResponseRecorder) {
+func TestTemplateGet(target string) (e *echo.Echo, req *http.Request, rec *httptest.ResponseRecorder) {
 	e = echo.New()
 
 	e.Use(session.Middleware(sessions.NewCookieStore([]byte("secret"))))
@@ -33,7 +33,7 @@ func testTemplateGet(target string) (e *echo.Echo, req *http.Request, rec *httpt
 
 	return e, req, rec
 }
-func testTemplatePost(target string, json string) (e *echo.Echo, req *http.Request, rec *httptest.ResponseRecorder) {
+func TestTemplatePost(target string, json string) (e *echo.Echo, req *http.Request, rec *httptest.ResponseRecorder) {
 	e = echo.New()
 
 	e.Use(session.Middleware(sessions.NewCookieStore([]byte("secret"))))
