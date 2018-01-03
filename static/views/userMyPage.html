@@ -1,5 +1,6 @@
 {{template "header"}}
-        {{if .Message}}
+{{$c := .Csrf}}
+{{if .Message}}
 <div class="alert alert-warning" role="alert">
     <button type="button" class="close" data-dismiss="alert" aria-label="閉じる"><span aria-hidden="true">×</span></button>
     <strong>warning</strong>{{.Message}}</div>
@@ -74,7 +75,12 @@
                 </div>
                 <ul class="list-group">
                     {{range .Service}}
-                        <li class="list-group-item">{{.ServiceName}}</li>
+                        <li class="list-group-item">
+                            <form method="post" action="/confirmed/delete/{{.Uid}}">
+                                <input type="hidden" name="csrf" hidden value="{{$c}}">
+                            {{.ServiceName}}<button type="submit" class="close" aria-label="連携解除">×</button>
+                            </form>
+                        </li>
                     {{end}}
                 </ul>
             </div>

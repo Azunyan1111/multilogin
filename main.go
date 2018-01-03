@@ -71,6 +71,7 @@ func main() {
 	// 連携
 	e.GET("/confirmed/:serviceUid", myHandler.GetConfirmedNew)
 	e.POST("/confirmed/:serviceUid", myHandler.GetConfirmedPost)
+	e.POST("/confirmed/delete/:serviceUid",myHandler.PostConfirmedDelete)
 
 	// API
 	e.GET("/api/user/name", myHandler.HelloWorld)

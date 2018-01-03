@@ -87,7 +87,7 @@ func TestGetConfirmedPost(t *testing.T) {
 		assert.Empty(t,doc.Find("#ErrorMessage").Text())
 		assert.Equal(t, "サービス連携が完了しました。サービスに戻ります。", doc.Find("#test_ConfirmedNew").Text())
 	}
-	orm.Delete(&confirmedService)
+	//orm.Delete(&confirmedService)
 }
 
 
@@ -109,3 +109,28 @@ func TestGetConfirmedPost2(t *testing.T){
 	assert.Equal(t,"Azunyan1111",user.UserName)
 }
 
+func TestPostConfirmedDelete(t *testing.T) {
+	orm := mysql.GetOrm()
+	e, req, rec := testTemplatePost("/confirmed/delete/"+ serviceUid,"")
+	c := e.NewContext(req, rec)
+
+	c.SetParamNames("serviceUid")
+	c.SetParamValues(serviceUid)
+
+	// session
+	mw := session.Middleware(sessions.NewCookieStore([]byte("secret")))
+	h := mw(func(c echo.Context) error {
+		sess, _ := session.Get("session", c)
+		sess.Values["uid"] = userUid
+		sess.Save(c.Request(), c.Response())
+		return nil
+	})
+	h(c)
+
+
+	if assert.NoError(t, PostConfirmedDelete(c)) {
+		assert.Equal(t, http.StatusTemporaryRedirect, rec.Code)
+		assert.Equal(t,int64(0),orm.Find(&structs.ConfirmedService{},
+		"user_uuid = ? and service_uuid = ?",userUid,serviceUid).RowsAffected)
+	}
+}

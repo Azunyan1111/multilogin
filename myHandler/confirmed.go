@@ -87,3 +87,39 @@ func GetConfirmedPost(c echo.Context) error {
 	// TODO:サービスのコールバックURLへ飛ばす
 	return c.Render(http.StatusOK, "confirmedEnd.html", nil)
 }
+
+func PostConfirmedDelete(c echo.Context) error {
+	// サービス名のuid
+	serviceUid := c.Param("serviceUid")
+	// セッション確認
+	s, err := session.Get("session", c)
+	if err != nil{
+		panic(err)
+	}
+	var userUid string
+	if s != nil{
+		userUid = fmt.Sprintf("%v", s.Values["uid"])
+	}
+	if len(userUid) < 6{
+		return c.Render(http.StatusBadRequest, "error.html",structs.Error{StatusCode:http.StatusBadRequest,
+			Message:"連携を解除する前にマルチログインにログインしてください"})
+	}
+
+	// サービス情報取得
+	orm := mysql.GetOrm()
+	var service structs.Service
+	orm.Find(&service, "uuid = ?",serviceUid)
+	if service.ID == 0{
+		return c.Render(http.StatusBadRequest, "error.html",structs.Error{StatusCode:http.StatusBadRequest,
+			Message:"連携するサービス情報が存在しないか、リクエストが不正です。"})
+	}
+	// 連携解除
+	var confirmedService structs.ConfirmedService
+	orm.Find(&confirmedService,"service_uuid = ?",serviceUid)
+	if orm.Delete(&confirmedService).RowsAffected != 1{
+		return c.Render(http.StatusInternalServerError, "error.html",structs.Error{StatusCode:http.StatusBadRequest,
+			Message:"正常に連携解除する事ができませんでした。"})
+	}
+	// TODO:ここで削除した趣旨のメッセージを表示したいよね。めんどくさいけど。
+	return c.Redirect(http.StatusTemporaryRedirect, "/")
+}
