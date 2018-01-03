@@ -76,7 +76,7 @@ func main() {
 
 	// API
 	e.GET("/api/sum", api.Sum)
-	e.GET("/api/user/name", myHandler.HelloWorld)
+	e.GET("/api/user/name", api.GetName)
 	e.GET("/api/user/image", myHandler.HelloWorld)
 
 	e.Start(":" + os.Getenv("PORT"))
