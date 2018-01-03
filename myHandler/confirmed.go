@@ -115,11 +115,11 @@ func PostConfirmedDelete(c echo.Context) error {
 	}
 	// 連携解除
 	var confirmedService structs.ConfirmedService
-	orm.Find(&confirmedService,"service_uuid = ?",serviceUid)
+	orm.Find(&confirmedService,"user_uuid = ? and service_uuid = ?",userUid,serviceUid)
 	if orm.Delete(&confirmedService).RowsAffected != 1{
 		return c.Render(http.StatusInternalServerError, "error.html",structs.Error{StatusCode:http.StatusBadRequest,
 			Message:"正常に連携解除する事ができませんでした。"})
 	}
 	// TODO:ここで削除した趣旨のメッセージを表示したいよね。めんどくさいけど。
-	return c.Redirect(http.StatusTemporaryRedirect, "/")
+	return c.Redirect(http.StatusTemporaryRedirect, "/user/mypage")
 }
