@@ -8,6 +8,7 @@ import (
 
 	"github.com/labstack/echo-contrib/session"
 	"github.com/Azunyan1111/multilogin/mysql"
+	"log"
 )
 
 func GetUserMyPage(c echo.Context) error {
@@ -22,6 +23,8 @@ func GetUserMyPage(c echo.Context) error {
 	if s != nil{
 		userUid = fmt.Sprintf("%v", s.Values["uid"])
 	}
+	log.Println(userUid)
+
 	if len(userUid) < 6{
 		return c.Render(http.StatusBadRequest, "error.html",structs.Error{StatusCode:http.StatusBadRequest,
 			Message:"連携するにマルチログインにログインしてください"})

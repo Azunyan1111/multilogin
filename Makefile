@@ -11,8 +11,7 @@ test:
 
 start:
 	make test
-	docker-compose stop
-	docker-compose up
+	docker-compose up multilogin
 
 fmt:
 	go fmt ./...

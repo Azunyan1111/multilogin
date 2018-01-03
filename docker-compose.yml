@@ -10,11 +10,15 @@ services:
     # localPort:DockerPort
       - '8080:8080'
       - '443:443'
+    links:
+      - "db"
+      - "redis"
     environment:
       - 'PORT=8080'
       - 'SESSION_SECRET'
     command: bash -c 'cd /go/src/github.com/Azunyan1111/multilogin &&
      go get ./... &&
+     export DOCKER_DATABASE_URL="root:password@tcp(db:3306)/ml?parseTime=true" &&
      go run main.go'
 
   db:
