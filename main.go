@@ -13,6 +13,7 @@ import (
 	"github.com/labstack/echo-contrib/session"
 	"time"
 	"math/rand"
+	"github.com/Azunyan1111/multilogin/api"
 )
 
 func main() {
@@ -74,6 +75,7 @@ func main() {
 	e.POST("/confirmed/delete/:serviceUid",myHandler.PostConfirmedDelete)
 
 	// API
+	e.GET("/api/sum", api.Sum)
 	e.GET("/api/user/name", myHandler.HelloWorld)
 	e.GET("/api/user/image", myHandler.HelloWorld)
 
