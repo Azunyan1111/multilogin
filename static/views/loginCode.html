@@ -1,0 +1,28 @@
+{{template "header"}}
+        {{if .Message}}
+<div class="alert alert-warning" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="閉じる"><span aria-hidden="true">×</span></button>
+    <strong>warning</strong>{{.Message}}</div>
+        {{end}}
+            <div class="panel panel-default" style="max-width: 330px;margin: 0 auto;">
+                <div class="panel-heading">
+                    <p id="test_userNew">ログインコード入力</p>
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal" action="/login/code" method="post">
+                        <label class="control-label" for="InputImage">認証コードをメールアドレスに送信しました。<br>高い確率で迷惑メールに行きます。<br>届かない場合は必ず確認してください。</label>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <input class="form-control" name="InputCode" required="required" placeholder="ログインコード">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <input type="hidden" name="csrf" hidden value="{{.Csrf}}">
+                                <button class="btn btn-lg btn-primary btn-block" value="Save" type="submit">ログイン</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+{{template "footer"}}

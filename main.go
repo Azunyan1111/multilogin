@@ -11,9 +11,12 @@ import (
 	"os"
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo-contrib/session"
+	"time"
+	"math/rand"
 )
 
 func main() {
+	rand.Seed(time.Now().Unix())
 	// Echoのインスタンス作る
 	e := echo.New()
 	if err := mysql.DataBaseInit(); err != nil {
@@ -49,8 +52,11 @@ func main() {
 
 	// ルーティング
 	e.GET("/", myHandler.HelloWorld)
-	// ログアウト
+	// ログイン・ログアウト
 	e.GET("/logout", myHandler.Logout)
+	e.GET("/login",myHandler.GetLogin)
+	e.POST("/login",myHandler.PostLogin)
+	e.POST("/login/code",myHandler.PostLoginCode)
 	// ユーザー
 	e.GET("/user/new", myHandler.GetUserNew)
 	e.POST("/user/new", myHandler.PostUserNew)

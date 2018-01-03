@@ -46,7 +46,16 @@ type ConfirmedPage struct {
 	Message string
 	Csrf    string
 }
-
+type LoginPage struct {
+	Email string
+	Message string
+	Csrf    string
+}
+type LoginCodePage struct {
+	Code string
+	Message string
+	Csrf    string
+}
 type Usered struct {
 	Uid       string
 	UserName  string
