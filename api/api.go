@@ -15,7 +15,7 @@ type sum struct {
 	JsonResponse JsonResponse `json:"status"`
 	Value        int          `json:"Value"`
 }
-
+// http://localhost:8040/api/sum?value1=1&value2=1
 func Sum(c echo.Context) error {
 	value1 := c.QueryParam("value1")
 	value2 := c.QueryParam("value2")
@@ -38,7 +38,6 @@ func Sum(c echo.Context) error {
 	res.JsonResponse.StatusCode = http.StatusOK
 	res.JsonResponse.Message = "ok"
 	res.Value = value
-	//c.Response().Header().Set("Authorization","test")
+	c.Response().Header().Set("Authorization","test")
 	return c.JSON(http.StatusOK, res)
 }
-
