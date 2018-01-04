@@ -38,6 +38,13 @@ func GetName(c echo.Context) error {
 		res.JsonResponse.Message = "Error: Your service does not have GetName authority."
 		return c.JSON(http.StatusBadRequest,res)
 	}
+	// ユーザーが認証しているかを確認する
+	var con structs.ConfirmedService
+	if orm.Find(&con,"user_uuid = ? and service_uuid = ?",userUid,serviceUid).RowsAffected != 1{
+		res.JsonResponse.StatusCode = http.StatusBadRequest
+		res.JsonResponse.Message = "Error: This user is not working with your service."
+		return c.JSON(http.StatusBadRequest,res)
+	}
 	// 権限があるのでユーザーの情報を返す
 	var user structs.User
 	if orm.Find(&user,"uuid = ?",userUid).RowsAffected != 1{

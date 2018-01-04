@@ -40,5 +40,5 @@ func IsBadSignature(authorization string)(bool){
 }
 // TODO:authorizationにはアクセストークンが入っているので、アクセストークンからserviceUUIDを取得しよう
 func GetServiceUid(authorization string)(string){
-	return "025ad602-7dba-4c08-8226-704b65f2873c"
+	return "124ah368-1eha-7h81-2345-365a24h6522y"
 }
