@@ -77,12 +77,12 @@ func main() {
 	// API
 	e.GET("/api/sum", api.Sum)
 	e.GET("/api/user/name", api.GetName)
-	e.GET("/api/user/image", myHandler.HelloWorld)
-	e.GET("/api/user/age", myHandler.HelloWorld)
-	e.GET("/api/user/birthday", myHandler.HelloWorld)
-	e.GET("/api/user/email", myHandler.HelloWorld)
-	e.GET("/api/user/phone", myHandler.HelloWorld)
-	e.GET("/api/user/address", myHandler.HelloWorld)
+	e.GET("/api/user/image", api.GetImage)
+	e.GET("/api/user/age", api.Sum)
+	e.GET("/api/user/birthday", api.Sum)
+	e.GET("/api/user/email", api.Sum)
+	e.GET("/api/user/phone", api.Sum)
+	e.GET("/api/user/address", api.Sum)
 
 	e.Start(":" + os.Getenv("PORT"))
 }
