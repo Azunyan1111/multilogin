@@ -78,6 +78,11 @@ func main() {
 	e.GET("/api/sum", api.Sum)
 	e.GET("/api/user/name", api.GetName)
 	e.GET("/api/user/image", myHandler.HelloWorld)
+	e.GET("/api/user/age", myHandler.HelloWorld)
+	e.GET("/api/user/birthday", myHandler.HelloWorld)
+	e.GET("/api/user/email", myHandler.HelloWorld)
+	e.GET("/api/user/phone", myHandler.HelloWorld)
+	e.GET("/api/user/address", myHandler.HelloWorld)
 
 	e.Start(":" + os.Getenv("PORT"))
 }
