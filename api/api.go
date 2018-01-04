@@ -4,8 +4,6 @@ import (
 	"net/http"
 	"github.com/labstack/echo"
 	"strconv"
-	"github.com/Azunyan1111/multilogin/structs"
-	"github.com/Azunyan1111/multilogin/mysql"
 )
 
 // http://localhost:8040/api/sum?value1=1&value2=1
@@ -34,49 +32,7 @@ func Sum(c echo.Context) error {
 	c.Response().Header().Set("Authorization","test")
 	return c.JSON(http.StatusOK, res)
 }
-// http://localhost:8040/api/user/name?uuid=26d2983e-3d5a-421c-bf6f-d4608025e555
-func GetName(c echo.Context) error {
-	// response struct
-	var res NameResponse
-	// orm
-	orm := mysql.GetOrm()
 
-	userUid := c.QueryParam("uuid")
-	if userUid == ""{
-		res.JsonResponse.StatusCode = http.StatusBadRequest
-		res.JsonResponse.Message = "Error: Request uuid not found. example url '/api/name?uuid=26d2983e-3d5a-421c-bf6f-d4608025e555'"
-		return c.JSON(http.StatusBadRequest,res)
-	}
-	if IsBadSignature(c.Request().Header.Get("Authorization")){
-		res.JsonResponse.StatusCode = http.StatusBadRequest
-		res.JsonResponse.Message = "Error: Request Signature is bad."
-		return c.JSON(http.StatusBadRequest,res)
-	}
-	// 権限を確認する
-	var service structs.Service
-	serviceUid := GetServiceUid(c.Request().Header.Get("Authorization"))
-	if orm.Find(&service,"uuid = ?",serviceUid).RowsAffected != 1{
-		res.JsonResponse.StatusCode = http.StatusBadRequest
-		res.JsonResponse.Message = "Error: Your service is not registered."
-		return c.JSON(http.StatusBadRequest,res)
-	}
-	if service.UserName != 1{
-		res.JsonResponse.StatusCode = http.StatusBadRequest
-		res.JsonResponse.Message = "Error: Your service does not have GetName authority."
-		return c.JSON(http.StatusBadRequest,res)
-	}
-	// 権限があるのでユーザーの情報を返す
-	var user structs.User
-	if orm.Find(&user,"uuid = ?",userUid).RowsAffected != 1{
-		res.JsonResponse.StatusCode = http.StatusBadRequest
-		res.JsonResponse.Message = "Error: The specified user does not exist"
-		return c.JSON(http.StatusBadRequest,res)
-	}
-	res.JsonResponse.StatusCode = http.StatusOK
-	res.JsonResponse.Message = "ok"
-	res.Name = user.UserName
-	return c.JSON(http.StatusOK,res)
-}
 
 // TODO:認証を作る。ヘッダーの中身全部打ち込まれるからスプリットしよう
 func IsBadSignature(authorization string)(bool){
