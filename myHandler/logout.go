@@ -2,8 +2,8 @@ package myHandler
 
 import (
 	"github.com/labstack/echo"
-	"net/http"
 	"github.com/labstack/echo-contrib/session"
+	"net/http"
 )
 
 func Logout(c echo.Context) error {

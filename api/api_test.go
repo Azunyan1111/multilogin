@@ -1,11 +1,11 @@
 package api
 
 import (
-	"testing"
-	"io/ioutil"
 	"encoding/json"
-	"github.com/stretchr/testify/assert"
 	"github.com/Azunyan1111/multilogin/myHandler"
+	"github.com/stretchr/testify/assert"
+	"io/ioutil"
+	"testing"
 )
 
 func TestSum(t *testing.T) {
@@ -14,12 +14,12 @@ func TestSum(t *testing.T) {
 
 	if assert.NoError(t, Sum(c)) {
 		byteArray, err := ioutil.ReadAll(rec.Result().Body)
-		if err != nil{
+		if err != nil {
 			panic(err)
 		}
 		var persons SumResponse
 		err = json.Unmarshal(byteArray, &persons)
-		assert.Equal(t,nil,err)
-		assert.Equal(t,2,persons.Value)
+		assert.Equal(t, nil, err)
+		assert.Equal(t, 2, persons.Value)
 	}
 }

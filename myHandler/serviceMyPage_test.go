@@ -1,21 +1,20 @@
 package myHandler
 
 import (
-	"testing"
-	"github.com/labstack/echo-contrib/session"
-	"github.com/labstack/echo"
-	"github.com/gorilla/sessions"
-	"github.com/stretchr/testify/assert"
-	"github.com/PuerkitoBio/goquery"
-	"net/http"
-	"github.com/Azunyan1111/multilogin/structs"
-	"net/url"
-	"time"
-	"strconv"
 	"github.com/Azunyan1111/multilogin/mysql"
+	"github.com/Azunyan1111/multilogin/structs"
+	"github.com/PuerkitoBio/goquery"
+	"github.com/gorilla/sessions"
+	"github.com/labstack/echo"
+	"github.com/labstack/echo-contrib/session"
+	"github.com/stretchr/testify/assert"
 	"math/rand"
+	"net/http"
+	"net/url"
+	"strconv"
+	"testing"
+	"time"
 )
-
 
 func TestGetServiceMyPage(t *testing.T) {
 
@@ -36,7 +35,7 @@ func TestGetServiceMyPage(t *testing.T) {
 		doc, _ := goquery.NewDocumentFromReader(rec.Result().Body)
 		email, _ := doc.Find("#new > div:nth-child(1) > div.panel-body >" +
 			" form > div:nth-child(1) > div > input").Attr("value")
-		assert.Equal(t,"god@god.com",email)
+		assert.Equal(t, "god@god.com", email)
 		assert.Equal(t, "サービス登録情報更新", doc.Find("#TestServiceMyPage").Text())
 	}
 }
@@ -50,7 +49,7 @@ func TestPostServiceMyPage(t *testing.T) {
 	f := make(url.Values)
 	rand.Seed(time.Now().UnixNano())
 	randomNumber := strconv.Itoa(rand.Intn(100))
-	curl := "http://bar.com/callback" +randomNumber
+	curl := "http://bar.com/callback" + randomNumber
 
 	// 既存の情報
 	f.Set("InputEmail", testService.Email)
@@ -58,7 +57,7 @@ func TestPostServiceMyPage(t *testing.T) {
 	f.Set("InputUrl", testService.Url)
 	f.Set("InputCallbackUrl", curl)
 
-	f.Set("InputUserName", "")//boolToString(testService.UserName))
+	f.Set("InputUserName", "") //boolToString(testService.UserName))
 	f.Set("InputUserEmail", "on")
 	f.Set("InputUserImage", boolToString(testService.UserImage))
 	f.Set("InputUserAge", boolToString(testService.UserAge))
@@ -66,8 +65,7 @@ func TestPostServiceMyPage(t *testing.T) {
 	f.Set("InputUserPhone", boolToString(testService.UserPhone))
 	f.Set("InputUserAddress", boolToString(testService.UserAddress))
 
-
-	e, req, rec := TestTemplatePost("/service/mypage",f.Encode())
+	e, req, rec := TestTemplatePost("/service/mypage", f.Encode())
 	c := e.NewContext(req, rec)
 	// session
 	mw := session.Middleware(sessions.NewCookieStore([]byte("secret")))
@@ -79,16 +77,15 @@ func TestPostServiceMyPage(t *testing.T) {
 	})
 	h(c)
 
-
 	if assert.NoError(t, PostServiceMyPage(c)) {
 		assert.Equal(t, http.StatusTemporaryRedirect, rec.Code)
 		doc, _ := goquery.NewDocumentFromReader(rec.Result().Body)
 
 		var service structs.Service
-		orm.Find(&service,"uuid = ?", serviceUid)
-		assert.Equal(t,curl, service.CallbackUrl)
-		assert.Equal(t,0, service.UserName)
-		assert.Equal(t,1 , service.UserEmail)
+		orm.Find(&service, "uuid = ?", serviceUid)
+		assert.Equal(t, curl, service.CallbackUrl)
+		assert.Equal(t, 0, service.UserName)
+		assert.Equal(t, 1, service.UserEmail)
 		assert.Equal(t, "登録完了", doc.Find("#test_ServiceNewPost").Text())
 		var old structs.Service
 		old = service
@@ -99,23 +96,23 @@ func TestPostServiceMyPage(t *testing.T) {
 		old.UserBirthday = 1
 		old.UserPhone = 1
 		old.UserAddress = 1
-		assert.Equal(t,int64(1),orm.Model(&service).Updates(&old).RowsAffected)
+		assert.Equal(t, int64(1), orm.Model(&service).Updates(&old).RowsAffected)
 	}
 
 }
 
-func boolToString(b int)(string){
-	if b == 1{
+func boolToString(b int) string {
+	if b == 1 {
 		return "on"
-	}else {
+	} else {
 		return ""
 	}
 }
 
-func boolToInt(b bool)(int){
-	if b{
+func boolToInt(b bool) int {
+	if b {
 		return 1
-	}else {
+	} else {
 		return 0
 	}
 }

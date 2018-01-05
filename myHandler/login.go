@@ -1,36 +1,36 @@
 package myHandler
 
 import (
-	"github.com/labstack/echo"
-	"net/http"
-	"github.com/labstack/echo-contrib/session"
 	"fmt"
-	"github.com/Azunyan1111/multilogin/structs"
-	"github.com/Azunyan1111/multilogin/mysql"
-	"math/rand"
-	"github.com/Azunyan1111/multilogin/redis"
 	"github.com/Azunyan1111/multilogin/model"
-	"strconv"
+	"github.com/Azunyan1111/multilogin/mysql"
+	"github.com/Azunyan1111/multilogin/redis"
+	"github.com/Azunyan1111/multilogin/structs"
+	"github.com/labstack/echo"
+	"github.com/labstack/echo-contrib/session"
 	"log"
+	"math/rand"
+	"net/http"
+	"strconv"
 )
 
 func GetLogin(c echo.Context) error {
 	// セッション確認
 	s, err := session.Get("session", c)
-	if err != nil{
+	if err != nil {
 		panic(err)
 	}
 	var userUid string
-	if s != nil{
+	if s != nil {
 		userUid = fmt.Sprintf("%v", s.Values["uid"])
 	}
-	if len(userUid) > 6{
-		return c.Render(http.StatusBadRequest, "error.html",structs.Error{StatusCode:http.StatusBadRequest,
-			Message:"ログイン済みです。別のアカウントにログインする場合はログアウトしてください。"})
+	if len(userUid) > 6 {
+		return c.Render(http.StatusBadRequest, "error.html", structs.Error{StatusCode: http.StatusBadRequest,
+			Message: "ログイン済みです。別のアカウントにログインする場合はログアウトしてください。"})
 	}
 
 	csrf := fmt.Sprintf("%v", c.Get("csrf"))
-	return c.Render(http.StatusOK,"login.html",structs.LoginPage{Csrf:csrf,Email:""})
+	return c.Render(http.StatusOK, "login.html", structs.LoginPage{Csrf: csrf, Email: ""})
 }
 
 func PostLogin(c echo.Context) error {
@@ -39,16 +39,16 @@ func PostLogin(c echo.Context) error {
 
 	// セッション確認
 	s, err := session.Get("session", c)
-	if err != nil{
+	if err != nil {
 		panic(err)
 	}
 	var userUid string
-	if s != nil{
+	if s != nil {
 		userUid = fmt.Sprintf("%v", s.Values["uid"])
 	}
-	if len(userUid) > 6{
-		return c.Render(http.StatusBadRequest, "error.html",structs.Error{StatusCode:http.StatusBadRequest,
-			Message:"ログイン済みです。別のアカウントにログインする場合はログアウトしてください。"})
+	if len(userUid) > 6 {
+		return c.Render(http.StatusBadRequest, "error.html", structs.Error{StatusCode: http.StatusBadRequest,
+			Message: "ログイン済みです。別のアカウントにログインする場合はログアウトしてください。"})
 	}
 
 	// ユーザー登録確認
@@ -56,15 +56,15 @@ func PostLogin(c echo.Context) error {
 	var user structs.User
 	var service structs.Service
 	uid := ""
-	if orm.Find(&user,"email = ?", email).RowsAffected == 1{
+	if orm.Find(&user, "email = ?", email).RowsAffected == 1 {
 		uid = user.Uid
 	}
-	if orm.Find(&service, "email = ?",email).RowsAffected == 1{
+	if orm.Find(&service, "email = ?", email).RowsAffected == 1 {
 		uid = service.Uid
 	}
-	if uid == ""{
-		return c.Render(http.StatusBadRequest, "login.html",structs.LoginPage{Csrf:csrf, Email:email,
-			Message:"アカウントが存在しないかデータベースに不具合があります。お問い合わせください。"})
+	if uid == "" {
+		return c.Render(http.StatusBadRequest, "login.html", structs.LoginPage{Csrf: csrf, Email: email,
+			Message: "アカウントが存在しないかデータベースに不具合があります。お問い合わせください。"})
 	}
 	var loginCodePage structs.LoginCodePage
 	loginCodePage.Csrf = csrf
@@ -73,9 +73,9 @@ func PostLogin(c echo.Context) error {
 	code := strconv.Itoa(rand.Intn(9)) + strconv.Itoa(rand.Intn(9)) + strconv.Itoa(rand.Intn(9)) +
 		strconv.Itoa(rand.Intn(9)) + strconv.Itoa(rand.Intn(9)) + strconv.Itoa(rand.Intn(9))
 	log.Println(code)
-	redis.Set(code,uid)
-	model.SendMail(email,"ログインコードお知らせします。","ログインコードは「"+ code + "」です。数字四桁になのます。")
-	return c.Render(http.StatusTemporaryRedirect,"loginCode.html",loginCodePage)
+	redis.Set(code, uid)
+	model.SendMail(email, "ログインコードお知らせします。", "ログインコードは「"+code+"」です。数字四桁になのます。")
+	return c.Render(http.StatusTemporaryRedirect, "loginCode.html", loginCodePage)
 }
 
 func PostLoginCode(c echo.Context) error {
@@ -83,31 +83,30 @@ func PostLoginCode(c echo.Context) error {
 
 	// セッション確認
 	s, err := session.Get("session", c)
-	if err != nil{
+	if err != nil {
 		panic(err)
 	}
 	var userUid string
-	if s != nil{
+	if s != nil {
 		userUid = fmt.Sprintf("%v", s.Values["uid"])
 	}
-	if len(userUid) > 6{
-		return c.Render(http.StatusBadRequest, "error.html",structs.Error{StatusCode:http.StatusBadRequest,
-			Message:"ログイン済みです。別のアカウントにログインする場合はログアウトしてください。"})
+	if len(userUid) > 6 {
+		return c.Render(http.StatusBadRequest, "error.html", structs.Error{StatusCode: http.StatusBadRequest,
+			Message: "ログイン済みです。別のアカウントにログインする場合はログアウトしてください。"})
 	}
 
 	// ユーザー登録確認
 	code := c.FormValue("InputCode")
 	uid := redis.Get(code)
-	if uid == ""{
+	if uid == "" {
 		var loginCodePage structs.LoginCodePage
 		loginCodePage.Csrf = csrf
 		loginCodePage.Message = "認証コードが間違っています"
-		return c.Render(http.StatusTemporaryRedirect,"loginCode.html",loginCodePage)
+		return c.Render(http.StatusTemporaryRedirect, "loginCode.html", loginCodePage)
 	}
 	// セッションに自分のuuidをつけて返す
 	s.Values["uid"] = uid
-	s.Save(c.Request(),c.Response().Writer)
+	s.Save(c.Request(), c.Response().Writer)
 
-	return c.Render(http.StatusTemporaryRedirect,"loginCodeEnd.html",nil)
+	return c.Render(http.StatusTemporaryRedirect, "loginCodeEnd.html", nil)
 }
-

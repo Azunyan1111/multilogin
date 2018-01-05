@@ -1,13 +1,13 @@
 package api
 
 import (
+	"encoding/json"
 	"github.com/Azunyan1111/multilogin/myHandler"
+	"github.com/Azunyan1111/multilogin/mysql"
 	"github.com/stretchr/testify/assert"
 	"io/ioutil"
-	"testing"
-	"github.com/Azunyan1111/multilogin/mysql"
 	"log"
-	"encoding/json"
+	"testing"
 )
 
 func TestGetName(t *testing.T) {
@@ -17,12 +17,12 @@ func TestGetName(t *testing.T) {
 
 	if assert.NoError(t, GetName(c)) {
 		byteArray, err := ioutil.ReadAll(rec.Result().Body)
-		if err != nil{
+		if err != nil {
 			panic(err)
 		}
 		var persons NameResponse
 		err = json.Unmarshal(byteArray, &persons)
-		assert.Equal(t,nil,err)
-		assert.Equal(t,"Azunyan1111",persons.Name)
+		assert.Equal(t, nil, err)
+		assert.Equal(t, "Azunyan1111", persons.Name)
 	}
 }

@@ -4,13 +4,13 @@ import (
 	"github.com/Azunyan1111/multilogin/mysql"
 	"github.com/Azunyan1111/multilogin/structs"
 	"github.com/PuerkitoBio/goquery"
+	"github.com/gorilla/sessions"
+	"github.com/labstack/echo"
+	"github.com/labstack/echo-contrib/session"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/url"
 	"testing"
-	"github.com/gorilla/sessions"
-	"github.com/labstack/echo-contrib/session"
-	"github.com/labstack/echo"
 )
 
 func TestGetUserNew(t *testing.T) {
@@ -82,7 +82,7 @@ func TestPostUserNew(t *testing.T) {
 
 	sqlUser := structs.User{}
 	orm := mysql.GetOrm()
-	orm.First(&sqlUser,"user = ?", user.UserName)
+	orm.First(&sqlUser, "user = ?", user.UserName)
 
 	assert.Equal(t, user.UserName, sqlUser.UserName)
 	assert.Equal(t, user.Email, sqlUser.Email)

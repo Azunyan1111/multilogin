@@ -3,11 +3,11 @@ package myHandler
 import (
 	"fmt"
 	"github.com/Azunyan1111/multilogin/structs"
-	"net/http"
 	"github.com/labstack/echo"
+	"net/http"
 
-	"github.com/labstack/echo-contrib/session"
 	"github.com/Azunyan1111/multilogin/mysql"
+	"github.com/labstack/echo-contrib/session"
 )
 
 func GetServiceMyPage(c echo.Context) error {
@@ -15,23 +15,23 @@ func GetServiceMyPage(c echo.Context) error {
 
 	// セッション確認
 	s, err := session.Get("session", c)
-	if err != nil{
+	if err != nil {
 		panic(err)
 	}
 	var serviceUid string
-	if s != nil{
+	if s != nil {
 		serviceUid = fmt.Sprintf("%v", s.Values["uid"])
 	}
-	if len(serviceUid) < 6{
-		return c.Render(http.StatusBadRequest, "error.html",structs.Error{StatusCode:http.StatusBadRequest,
-			Message:"連携するにマルチログインにログインしてください"})
+	if len(serviceUid) < 6 {
+		return c.Render(http.StatusBadRequest, "error.html", structs.Error{StatusCode: http.StatusBadRequest,
+			Message: "連携するにマルチログインにログインしてください"})
 	}
 	// サービス情報取得
 	var serviceMyPage structs.ServiceMyPage
-	rows := orm.Find(&serviceMyPage.Service,"uuid = ?", serviceUid).RowsAffected
-	if rows != 1{
-		return c.Render(http.StatusBadRequest, "error.html",structs.Error{StatusCode:http.StatusBadRequest,
-			Message:"サービス管理者としてログインしていません。サービスの管理を行うには再度ログインしてください。"})
+	rows := orm.Find(&serviceMyPage.Service, "uuid = ?", serviceUid).RowsAffected
+	if rows != 1 {
+		return c.Render(http.StatusBadRequest, "error.html", structs.Error{StatusCode: http.StatusBadRequest,
+			Message: "サービス管理者としてログインしていません。サービスの管理を行うには再度ログインしてください。"})
 	}
 	// CSRF
 	csrf := fmt.Sprintf("%v", c.Get("csrf"))
@@ -43,23 +43,23 @@ func PostServiceMyPage(c echo.Context) error {
 	orm := mysql.GetOrm()
 	// セッション確認
 	s, err := session.Get("session", c)
-	if err != nil{
+	if err != nil {
 		panic(err)
 	}
 	var serviceUid string
-	if s != nil{
+	if s != nil {
 		serviceUid = fmt.Sprintf("%v", s.Values["uid"])
 	}
-	if len(serviceUid) < 6{
-		return c.Render(http.StatusBadRequest, "error.html",structs.Error{StatusCode:http.StatusBadRequest,
-			Message:"連携するにマルチログインにログインしてください"})
+	if len(serviceUid) < 6 {
+		return c.Render(http.StatusBadRequest, "error.html", structs.Error{StatusCode: http.StatusBadRequest,
+			Message: "連携するにマルチログインにログインしてください"})
 	}
 	// サービス情報取得
 	var serviceMyPage structs.ServiceMyPage
-	rows := orm.Find(&serviceMyPage.Service,"uuid = ?", serviceUid).RowsAffected
-	if rows != 1{
-		return c.Render(http.StatusBadRequest, "error.html",structs.Error{StatusCode:http.StatusBadRequest,
-			Message:"サービス管理者としてログインしていません。サービスの管理を行うには再度ログインしてください。"})
+	rows := orm.Find(&serviceMyPage.Service, "uuid = ?", serviceUid).RowsAffected
+	if rows != 1 {
+		return c.Render(http.StatusBadRequest, "error.html", structs.Error{StatusCode: http.StatusBadRequest,
+			Message: "サービス管理者としてログインしていません。サービスの管理を行うには再度ログインしてください。"})
 	}
 
 	// ユーザーが入力した情報取得
@@ -80,8 +80,8 @@ func PostServiceMyPage(c echo.Context) error {
 	service.UserAddress = checkbox2(c.FormValue("InputUserAddress"))
 	row := orm.Save(&service)
 
-	if row.RowsAffected != 1{
-		var user  structs.UserMyPage
+	if row.RowsAffected != 1 {
+		var user structs.UserMyPage
 		user.Message = "エラー | ユーザーデータが正しく登録できませんでした。"
 		return c.Render(http.StatusBadRequest, "userMyPage.html", user)
 	}

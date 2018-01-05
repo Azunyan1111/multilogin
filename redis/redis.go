@@ -1,6 +1,5 @@
 package redis
 
-
 var oneTime map[string]string = map[string]string{}
 
 func Get(key string) string {
@@ -12,6 +11,6 @@ func Get(key string) string {
 	}
 }
 
-func Set(key string,value string){
+func Set(key string, value string) {
 	oneTime[key] = value
 }

@@ -5,8 +5,8 @@ import (
 	"github.com/Azunyan1111/multilogin/structs"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/google/uuid"
-	"os"
 	"github.com/jinzhu/gorm"
+	"os"
 )
 
 var MyDB *sql.DB
@@ -26,7 +26,7 @@ func DataBaseInit() error {
 	return nil
 }
 
-func GetOrm() *gorm.DB{
+func GetOrm() *gorm.DB {
 	return MyOrm
 }
 
@@ -46,7 +46,7 @@ func ConnectionTest() (int64, error) {
 func SelectUserByUuid(uuid string) (structs.Usered, error) {
 	row := MyDB.QueryRow("select user,uuid from users where uuid = ?;", uuid)
 	var user structs.Usered
-	if err := row.Scan(&user.UserName,&user.Uid); err != nil {
+	if err := row.Scan(&user.UserName, &user.Uid); err != nil {
 		return structs.Usered{}, err
 	}
 	return user, nil
@@ -61,16 +61,16 @@ func SelectConfirmedByUid(uuid string) ([]structs.Serviced, error) {
 	for rows.Next() {
 		var dataBaseId int
 		var confirmed structs.Confirmed
-		if err := rows.Scan(&dataBaseId, &confirmed.UserUid, &confirmed.ServiceUid); err != nil{
+		if err := rows.Scan(&dataBaseId, &confirmed.UserUid, &confirmed.ServiceUid); err != nil {
 			return []structs.Serviced{}, err
 		}
 		confirmeds = append(confirmeds, confirmed)
 	}
 	var services []structs.Serviced
-	for _, con := range confirmeds{
+	for _, con := range confirmeds {
 		var service structs.Serviced
 		row := MyDB.QueryRow("select (`name`) from service where uuid = ?;", con.ServiceUid)
-		if err := row.Scan(&service.ServiceName); err != nil{
+		if err := row.Scan(&service.ServiceName); err != nil {
 			return []structs.Serviced{}, err
 		}
 		services = append(services, service)

@@ -1,13 +1,13 @@
 package api
 
 import (
+	"encoding/json"
 	"github.com/Azunyan1111/multilogin/myHandler"
+	"github.com/Azunyan1111/multilogin/mysql"
 	"github.com/stretchr/testify/assert"
 	"io/ioutil"
-	"testing"
-	"github.com/Azunyan1111/multilogin/mysql"
 	"log"
-	"encoding/json"
+	"testing"
 )
 
 func TestGetEmail(t *testing.T) {
@@ -17,16 +17,12 @@ func TestGetEmail(t *testing.T) {
 
 	if assert.NoError(t, GetEmail(c)) {
 		byteArray, err := ioutil.ReadAll(rec.Result().Body)
-		if err != nil{
+		if err != nil {
 			panic(err)
 		}
 		var persons EmailResponse
 		err = json.Unmarshal(byteArray, &persons)
-		assert.Equal(t,nil,err)
-		assert.Equal(t,"azunyan1111@azunyan.me",persons.Email)
+		assert.Equal(t, nil, err)
+		assert.Equal(t, "azunyan1111@azunyan.me", persons.Email)
 	}
 }
-
-
-
-

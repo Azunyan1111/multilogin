@@ -1,13 +1,13 @@
 package api
 
 import (
+	"encoding/json"
 	"github.com/Azunyan1111/multilogin/myHandler"
+	"github.com/Azunyan1111/multilogin/mysql"
 	"github.com/stretchr/testify/assert"
 	"io/ioutil"
-	"testing"
-	"github.com/Azunyan1111/multilogin/mysql"
 	"log"
-	"encoding/json"
+	"testing"
 )
 
 func TestGetBirthday(t *testing.T) {
@@ -17,14 +17,12 @@ func TestGetBirthday(t *testing.T) {
 
 	if assert.NoError(t, GetBirthday(c)) {
 		byteArray, err := ioutil.ReadAll(rec.Result().Body)
-		if err != nil{
+		if err != nil {
 			panic(err)
 		}
 		var persons BirthdayResponse
 		err = json.Unmarshal(byteArray, &persons)
-		assert.Equal(t,nil,err)
-		assert.Equal(t,"2017-08-01",persons.Birthday)
+		assert.Equal(t, nil, err)
+		assert.Equal(t, "2017-08-01", persons.Birthday)
 	}
 }
-
-

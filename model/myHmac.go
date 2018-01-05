@@ -6,15 +6,15 @@ import (
 	"encoding/hex"
 )
 
-func GetHmac(key string,value string)(string){
+func GetHmac(key string, value string) string {
 	mac := hmac.New(sha256.New, []byte(key))
 	mac.Write([]byte(value))
 	return hex.EncodeToString(mac.Sum(nil))
 }
 
-func CheckHmac(key string,value string, hash string)(bool){
+func CheckHmac(key string, value string, hash string) bool {
 	mac := hmac.New(sha256.New, []byte(key))
 	mac.Write([]byte(value))
 	strHash := hex.EncodeToString(mac.Sum(nil))
-	return hmac.Equal([]byte(strHash),[]byte(hash))
+	return hmac.Equal([]byte(strHash), []byte(hash))
 }

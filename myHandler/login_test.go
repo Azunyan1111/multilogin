@@ -1,15 +1,15 @@
 package myHandler
 
 import (
-	"github.com/stretchr/testify/assert"
+	"github.com/Azunyan1111/multilogin/structs"
 	"github.com/PuerkitoBio/goquery"
-	"testing"
-	"github.com/labstack/echo-contrib/session"
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo"
+	"github.com/labstack/echo-contrib/session"
+	"github.com/stretchr/testify/assert"
 	"net/http"
-	"github.com/Azunyan1111/multilogin/structs"
 	"net/url"
+	"testing"
 )
 
 var code string
@@ -38,7 +38,6 @@ func TestGetLogin(t *testing.T) {
 		assert.Equal(t, "ログイン", text)
 	}
 }
-
 
 func TestPostLogin(t *testing.T) {
 	f := make(url.Values)

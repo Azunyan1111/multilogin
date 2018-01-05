@@ -11,20 +11,20 @@ func GetImage(c echo.Context) error {
 	var res ImageResponse
 
 	service, user, response := apiTemplate(c)
-	if response.StatusCode != 0{
-		c.JSON(response.StatusCode,ImageResponse{JsonResponse:response})
+	if response.StatusCode != 0 {
+		c.JSON(response.StatusCode, ImageResponse{JsonResponse: response})
 	}
 
 	// 権限を確認する
-	if service.UserImage != 1{
+	if service.UserImage != 1 {
 		res.JsonResponse.StatusCode = http.StatusBadRequest
 		res.JsonResponse.Message = "Error: Your service does not have GetImage authority."
-		return c.JSON(http.StatusBadRequest,res)
+		return c.JSON(http.StatusBadRequest, res)
 	}
 
 	// 権限があるのでユーザーの情報を返す
 	res.JsonResponse.StatusCode = http.StatusOK
 	res.JsonResponse.Message = "ok"
 	res.Image = user.Image
-	return c.JSON(http.StatusOK,res)
+	return c.JSON(http.StatusOK, res)
 }

@@ -5,15 +5,15 @@ import (
 	"github.com/Azunyan1111/multilogin/mysql"
 	"github.com/labstack/echo"
 
+	"github.com/Azunyan1111/multilogin/api"
+	"github.com/gorilla/sessions"
+	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/middleware"
 	"html/template"
 	"io"
-	"os"
-	"github.com/gorilla/sessions"
-	"github.com/labstack/echo-contrib/session"
-	"time"
 	"math/rand"
-	"github.com/Azunyan1111/multilogin/api"
+	"os"
+	"time"
 )
 
 func main() {
@@ -43,8 +43,7 @@ func main() {
 	}))
 	e.Use(middleware.Gzip())
 	e.Use(middleware.Secure())
-	e.Use(session.Middleware(sessions.NewCookieStore([]byte("key")/*securecookie.GenerateRandomKey(64)*/)))
-
+	e.Use(session.Middleware(sessions.NewCookieStore([]byte("key") /*securecookie.GenerateRandomKey(64)*/)))
 
 	e.Use(customHeader)
 	//e.StartAutoTLS(":443")
@@ -55,9 +54,9 @@ func main() {
 	e.GET("/", myHandler.HelloWorld)
 	// ログイン・ログアウト
 	e.GET("/logout", myHandler.Logout)
-	e.GET("/login",myHandler.GetLogin)
-	e.POST("/login",myHandler.PostLogin)
-	e.POST("/login/code",myHandler.PostLoginCode)
+	e.GET("/login", myHandler.GetLogin)
+	e.POST("/login", myHandler.PostLogin)
+	e.POST("/login/code", myHandler.PostLoginCode)
 	// ユーザー
 	e.GET("/user/new", myHandler.GetUserNew)
 	e.POST("/user/new", myHandler.PostUserNew)
@@ -72,7 +71,7 @@ func main() {
 	// 連携
 	e.GET("/confirmed/:serviceUid", myHandler.GetConfirmedNew)
 	e.POST("/confirmed/:serviceUid", myHandler.GetConfirmedPost)
-	e.POST("/confirmed/delete/:serviceUid",myHandler.PostConfirmedDelete)
+	e.POST("/confirmed/delete/:serviceUid", myHandler.PostConfirmedDelete)
 
 	// API
 	e.GET("/api/sum", api.Sum)

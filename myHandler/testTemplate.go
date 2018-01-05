@@ -1,14 +1,14 @@
 package myHandler
 
 import (
+	"github.com/gorilla/sessions"
 	"github.com/labstack/echo"
+	"github.com/labstack/echo-contrib/session"
 	"html/template"
 	"io"
 	"net/http"
 	"net/http/httptest"
 	"strings"
-	"github.com/labstack/echo-contrib/session"
-	"github.com/gorilla/sessions"
 )
 
 type Template struct {

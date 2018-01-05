@@ -10,19 +10,18 @@ func GetEmail(c echo.Context) error {
 	var res EmailResponse
 
 	service, user, response := apiTemplate(c)
-	if response.StatusCode != 0{
-		c.JSON(response.StatusCode,EmailResponse{JsonResponse:response})
+	if response.StatusCode != 0 {
+		c.JSON(response.StatusCode, EmailResponse{JsonResponse: response})
 	}
 
-	if service.UserEmail != 1{
+	if service.UserEmail != 1 {
 		res.JsonResponse.StatusCode = http.StatusBadRequest
 		res.JsonResponse.Message = "Error: Your service does not have GetEmail authority."
-		return c.JSON(http.StatusBadRequest,res)
+		return c.JSON(http.StatusBadRequest, res)
 	}
 
 	res.JsonResponse.StatusCode = http.StatusOK
 	res.JsonResponse.Message = "ok"
 	res.Email = user.Email
-	return c.JSON(http.StatusOK,res)
+	return c.JSON(http.StatusOK, res)
 }
-

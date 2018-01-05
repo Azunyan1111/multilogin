@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-func SendMail(address string,subject string, body string)(error){
+func SendMail(address string, subject string, body string) error {
 	email := gmail.Compose(subject, body)
 	email.From = os.Getenv("GMAIL_ADDRESS")
 	email.Password = os.Getenv("GMAIL_PASSWORD")

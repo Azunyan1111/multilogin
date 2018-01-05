@@ -11,20 +11,20 @@ func GetName(c echo.Context) error {
 	var res NameResponse
 
 	service, user, response := apiTemplate(c)
-	if response.StatusCode != 0{
-		c.JSON(response.StatusCode,NameResponse{JsonResponse:response})
+	if response.StatusCode != 0 {
+		c.JSON(response.StatusCode, NameResponse{JsonResponse: response})
 	}
 
 	// 権限を確認する
-	if service.UserName != 1{
+	if service.UserName != 1 {
 		res.JsonResponse.StatusCode = http.StatusBadRequest
 		res.JsonResponse.Message = "Error: Your service does not have GetName authority."
-		return c.JSON(http.StatusBadRequest,res)
+		return c.JSON(http.StatusBadRequest, res)
 	}
 
 	// 権限があるのでユーザーの情報を返す
 	res.JsonResponse.StatusCode = http.StatusOK
 	res.JsonResponse.Message = "ok"
 	res.Name = user.UserName
-	return c.JSON(http.StatusOK,res)
+	return c.JSON(http.StatusOK, res)
 }

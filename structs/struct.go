@@ -47,12 +47,12 @@ type ConfirmedPage struct {
 	Csrf    string
 }
 type LoginPage struct {
-	Email string
+	Email   string
 	Message string
 	Csrf    string
 }
 type LoginCodePage struct {
-	Code string
+	Code    string
 	Message string
 	Csrf    string
 }
@@ -69,7 +69,7 @@ type Usered struct {
 	Address   string
 	CreatedAt string
 	UpdatedAt string
-	DeletedAt    string
+	DeletedAt string
 }
 
 type Serviced struct {
@@ -94,12 +94,12 @@ type Serviced struct {
 }
 
 type Confirmed struct {
-	Id string
-	UserUid string
+	Id         string
+	UserUid    string
 	ServiceUid string
 }
 
 type Error struct {
 	StatusCode int
-	Message string
+	Message    string
 }
