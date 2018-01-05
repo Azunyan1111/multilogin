@@ -1,5 +1,7 @@
 package api
 
+import "github.com/Azunyan1111/multilogin/structs"
+
 type JsonResponse struct {
 	StatusCode int    `json:"StatusCode"`
 	Message    string `json:"Message"`
@@ -46,17 +48,6 @@ type AddressResponse struct {
 }
 
 type AllResponse struct {
-	JsonResponse JsonResponse `json:"Status"`
-	User         UserResponse `json:"User"`
-}
-
-type UserResponse struct {
-	Uid      string `json:"Uuid"`
-	UserName string `json:"UserName"`
-	Email    string `json:"Email"`
-	Image    string `json:"Image"`
-	Age      string `json:"Age"`
-	Birthday string `json:"Birthday"`
-	Phone    string `json:"Phone"`
-	Address  string `json:"Address"`
+	JsonResponse JsonResponse         `json:"Status"`
+	User         structs.UserResponse `json:"UserResponse"`
 }

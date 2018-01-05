@@ -151,4 +151,41 @@
         </li>
     </ul>
 </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        連携ユーザー情報
+    </div>
+    <ul class="list-group">
+        <li class="list-group-item">
+        <table class="table table-condensed table-hover">
+            <thead>
+            <tr>
+                <th>ユーザー名</th>
+                <th>メールアドレス</th>
+                <th>画像URL</th>
+                <th>年齢</th>
+                <th>生年月日</th>
+                <th>電話番号</th>
+                <th>住所</th>
+            </tr>
+            </thead>
+            <tbody>
+        {{range .UserResponse}}
+                <tr>
+                    <th>{{.UserName}}</th>
+                    <th>{{.Email}}</th>
+                    <th>{{.Image}}</th>
+                    <th>{{.Age}}</th>
+                    <th>{{.Birthday}}</th>
+                    <th>{{.Phone}}</th>
+                    <th>{{.Address}}</th>
+                </tr>
+        {{end}}
+
+    </tbody>
+    </table>
+        </li>
+
+    </ul>
+</div>
 {{template "footer"}}

@@ -36,9 +36,10 @@ type UserMyPage struct {
 	Csrf    string
 }
 type ServiceMyPage struct {
-	Service Service
-	Message string
-	Csrf    string
+	Service      Service
+	UserResponse []UserResponse
+	Message      string
+	Csrf         string
 }
 type ConfirmedPage struct {
 	User    Usered
@@ -102,4 +103,14 @@ type Confirmed struct {
 type Error struct {
 	StatusCode int
 	Message    string
+}
+type UserResponse struct {
+	Uid      string `json:"Uuid"`
+	UserName string `json:"UserName"`
+	Email    string `json:"Email"`
+	Image    string `json:"Image"`
+	Age      string `json:"Age"`
+	Birthday string `json:"Birthday"`
+	Phone    string `json:"Phone"`
+	Address  string `json:"Address"`
 }
