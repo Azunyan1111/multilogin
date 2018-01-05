@@ -140,4 +140,15 @@
                     </form>
                 </div>
             </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        アプリケーション情報
+    </div>
+    <ul class="list-group">
+        <li class="list-group-item">
+            アクセストークン:{{.Service.Token}}<br>
+            シークレットトークン:{{.Service.Secret}}<br>
+        </li>
+    </ul>
+</div>
 {{template "footer"}}
