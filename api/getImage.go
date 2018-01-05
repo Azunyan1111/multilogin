@@ -8,11 +8,11 @@ import (
 // http://localhost:8040/api/user/image?uuid=26d2983e-3d5a-421c-bf6f-d4608025e555
 func GetImage(c echo.Context) error {
 	// response struct
-	var res ImageResponse
+	var res ImageRespnse
 
 	service, user, response := apiTemplate(c)
 	if response.StatusCode != 0{
-		c.JSON(response.StatusCode,NameResponse{JsonResponse:response})
+		c.JSON(response.StatusCode,ImageResponse{JsonResponse:response})
 	}
 
 	// 権限を確認する
