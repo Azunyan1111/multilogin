@@ -16,7 +16,6 @@ func TestGetEmail(t *testing.T) {
 	c := e.NewContext(req, rec)
 
 	if assert.NoError(t, GetEmail(c)) {
-		log.Println(rec.Result().StatusCode)
 		byteArray, err := ioutil.ReadAll(rec.Result().Body)
 		if err != nil{
 			panic(err)

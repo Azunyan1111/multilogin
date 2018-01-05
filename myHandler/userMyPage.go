@@ -23,7 +23,6 @@ func GetUserMyPage(c echo.Context) error {
 	if s != nil{
 		userUid = fmt.Sprintf("%v", s.Values["uid"])
 	}
-	log.Println(userUid)
 
 	if len(userUid) < 6{
 		return c.Render(http.StatusBadRequest, "error.html",structs.Error{StatusCode:http.StatusBadRequest,

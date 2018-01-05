@@ -17,12 +17,10 @@ func TestGetAge(t *testing.T) {
 	c := e.NewContext(req, rec)
 
 	if assert.NoError(t, GetAge(c)) {
-		log.Println(rec.Result().StatusCode)
 		byteArray, err := ioutil.ReadAll(rec.Result().Body)
 		if err != nil{
 			panic(err)
 		}
-		log.Println(string(byteArray))
 		var persons AgeResponse
 		err = json.Unmarshal(byteArray, &persons)
 		assert.Equal(t,nil,err)
