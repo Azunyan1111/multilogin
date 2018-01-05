@@ -6,7 +6,6 @@ import (
 	"github.com/Azunyan1111/multilogin/mysql"
 	"github.com/stretchr/testify/assert"
 	"io/ioutil"
-	"log"
 	"strconv"
 	"testing"
 )

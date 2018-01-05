@@ -8,7 +8,6 @@ import (
 
 	"github.com/Azunyan1111/multilogin/mysql"
 	"github.com/labstack/echo-contrib/session"
-	"log"
 )
 
 func GetUserMyPage(c echo.Context) error {
