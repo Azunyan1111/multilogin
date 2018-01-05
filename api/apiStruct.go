@@ -29,3 +29,8 @@ type BirthdayResponse struct {
 	JsonResponse JsonResponse `json:"Status"`
 	Birthday        string          `json:"Birthday"`
 }
+
+type EmailResponse struct {
+	JsonResponse JsonResponse `json:"Status"`
+	Email        string          `json:"Email"`
+}
