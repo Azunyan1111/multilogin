@@ -7,6 +7,7 @@ db:
 
 test:
 	make db
+	make fmt
 	go test ./...
 
 start:
