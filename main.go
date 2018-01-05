@@ -78,7 +78,7 @@ func main() {
 	e.GET("/api/sum", api.Sum)
 	e.GET("/api/user/name", api.GetName)
 	e.GET("/api/user/image", api.GetImage)
-	e.GET("/api/user/age", api.Sum)
+	e.GET("/api/user/age", api.GetAge)
 	e.GET("/api/user/birthday", api.Sum)
 	e.GET("/api/user/email", api.Sum)
 	e.GET("/api/user/phone", api.Sum)

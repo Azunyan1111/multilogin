@@ -19,3 +19,8 @@ type ImageResponse struct {
 	JsonResponse JsonResponse `json:"Status"`
 	Image        string          `json:"Image"`
 }
+
+type AgeResponse struct {
+	JsonResponse JsonResponse `json:"Status"`
+	Age        string          `json:"Image"`
+}
