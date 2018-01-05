@@ -8,7 +8,7 @@ import (
 // http://localhost:8040/api/user/image?uuid=26d2983e-3d5a-421c-bf6f-d4608025e555
 func GetImage(c echo.Context) error {
 	// response struct
-	var res ImageRespnse
+	var res ImageResponse
 
 	service, user, response := apiTemplate(c)
 	if response.StatusCode != 0{
