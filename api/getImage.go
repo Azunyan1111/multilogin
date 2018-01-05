@@ -18,7 +18,7 @@ func GetImage(c echo.Context) error {
 	// 権限を確認する
 	if service.UserImage != 1{
 		res.JsonResponse.StatusCode = http.StatusBadRequest
-		res.JsonResponse.Message = "Error: Your service does not have GetName authority."
+		res.JsonResponse.Message = "Error: Your service does not have GetImage authority."
 		return c.JSON(http.StatusBadRequest,res)
 	}
 
