@@ -82,6 +82,9 @@ func main() {
 	e.GET("/api/user/email", api.GetEmail)
 	e.GET("/api/user/phone", api.GetPhone)
 	e.GET("/api/user/address", api.GetAddress)
+	// 全件取得
+	e.GET("/api/user/index", api.Sum)
+	e.GET("/api/user/all", api.GetAll)
 
 	e.Start(":" + os.Getenv("PORT"))
 }
