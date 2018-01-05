@@ -18,14 +18,12 @@ func TestGetPhone(t *testing.T) {
 	if assert.NoError(t, GetPhone(c)) {
 		log.Println(rec.Result().StatusCode)
 		byteArray, err := ioutil.ReadAll(rec.Result().Body)
-		if err != nil{
+		if err != nil {
 			panic(err)
 		}
 		var persons PhoneResponse
 		err = json.Unmarshal(byteArray, &persons)
-		assert.Equal(t,nil,err)
-		assert.Equal(t,"090-1145-1419",persons.Phone)
+		assert.Equal(t, nil, err)
+		assert.Equal(t, "090-1145-1419", persons.Phone)
 	}
 }
-
-

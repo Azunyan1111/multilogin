@@ -13,23 +13,22 @@ func GetAddress(c echo.Context) error {
 	var res AddressResponse
 
 	service, user, response := apiTemplate(c)
-	if response.StatusCode != 0{
+	if response.StatusCode != 0 {
 		// TODO:構造体
-		c.JSON(response.StatusCode,AddressResponse{JsonResponse:response})
+		c.JSON(response.StatusCode, AddressResponse{JsonResponse: response})
 	}
 
 	// TODO:権限
-	if service.UserAddress != 1{
+	if service.UserAddress != 1 {
 		res.JsonResponse.StatusCode = http.StatusBadRequest
 		// TODO:メッセージ
 		res.JsonResponse.Message = "Error: Your service does not have GetAddress authority."
-		return c.JSON(http.StatusBadRequest,res)
+		return c.JSON(http.StatusBadRequest, res)
 	}
 
 	res.JsonResponse.StatusCode = http.StatusOK
 	res.JsonResponse.Message = "ok"
 	// TODO:ユーザー情報
 	res.Address = user.Address
-	return c.JSON(http.StatusOK,res)
+	return c.JSON(http.StatusOK, res)
 }
-

@@ -42,5 +42,5 @@ type PhoneResponse struct {
 
 type AddressResponse struct {
 	JsonResponse JsonResponse `json:"Status"`
-	Address        string       `json:"Address"`
+	Address      string       `json:"Address"`
 }
