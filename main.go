@@ -81,7 +81,7 @@ func main() {
 	e.GET("/api/user/birthday", api.GetBirthday)
 	e.GET("/api/user/email", api.GetEmail)
 	e.GET("/api/user/phone", api.GetPhone)
-	e.GET("/api/user/address", api.Sum)
+	e.GET("/api/user/address", api.GetAddress)
 
 	e.Start(":" + os.Getenv("PORT"))
 }

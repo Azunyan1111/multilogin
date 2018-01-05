@@ -39,3 +39,8 @@ type PhoneResponse struct {
 	JsonResponse JsonResponse `json:"Status"`
 	Phone        string       `json:"Phone"`
 }
+
+type AddressResponse struct {
+	JsonResponse JsonResponse `json:"Status"`
+	Address        string       `json:"Address"`
+}
