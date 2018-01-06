@@ -20,6 +20,8 @@ services:
      go get ./... &&
      export DOCKER_DATABASE_URL="root:password@tcp(db:3306)/ml?parseTime=true" &&
      export TOP_PAGE_URL="http://localhost:8080" &&
+     export GMAIL_ADDRESS="your gmail address" &&
+     export GMAIL_PASSWORD="your gmail password" &&
      go run main.go'
 
   db:
