@@ -22,6 +22,6 @@ func TestGetAddress(t *testing.T) {
 		var persons AddressResponse
 		err = json.Unmarshal(byteArray, &persons)
 		assert.Equal(t, nil, err)
-		assert.Equal(t, "福岡", persons.Address)
+		assert.Equal(t, "fukuoka", persons.Address)
 	}
 }

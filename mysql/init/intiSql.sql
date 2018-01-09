@@ -50,9 +50,9 @@ CREATE TABLE `confirmed_service` (
 
 INSERT INTO `users` (`id`, `uuid`, `user`, `image`, `age`, `birthday`, `email`, `email_ok`, `phone`, `phone_ok`, `address`, `created_at`, `updated_at`, `deleted_at`)
 VALUES
-  (1, '26d2983e-3d5a-421c-bf6f-d4608025e555', 'Azunyan1111', 'http://noimage.com/azunyan', 76, '2017-08-01', 'azunyan1111@azunyan.me', 1, '090-1145-1419', 1, '福岡', '2017-12-31 13:37:06', '2018-01-05 21:04:23', NULL),
-  (2, 'uuid2', 'hoge', 'https://11neko.com/wp-content/uploads/2014/10/hoge.jpg', 16, '1990-11-17', 'hoge@hoge.com', 1, '090-4545-1919', 1, '東京都ほげ市', '2017-12-11 13:16:28', '2018-01-03 16:31:37', NULL),
-  (3, 'uuid3', 'foo', 'https://i.stack.imgur.com/sViXp.png', 16, '1980-1-1', 'foo@foo.com', 0, '090-4545-1919', 0, '東京都ほげ市', '2017-12-11 13:16:30', '2018-01-03 16:30:12', NULL);
+  (1, '26d2983e-3d5a-421c-bf6f-d4608025e555', 'Azunyan1111', 'http://noimage.com/azunyan', 76, '2017-08-01', 'azunyan1111@azunyan.me', 1, '090-1145-1419', 1, 'fukuoka', '2017-12-31 13:37:06', '2018-01-05 21:04:23', NULL),
+  (2, 'uuid2', 'hoge', 'https://11neko.com/wp-content/uploads/2014/10/hoge.jpg', 16, '1990-11-17', 'hoge@hoge.com', 1, '090-4545-1919', 1, 'tokyo hoge city', '2017-12-11 13:16:28', '2018-01-03 16:31:37', NULL),
+  (3, 'uuid3', 'foo', 'https://i.stack.imgur.com/sViXp.png', 16, '1980-1-1', 'foo@foo.com', 0, '090-4545-1919', 0, 'tokyo', '2017-12-11 13:16:30', '2018-01-03 16:30:12', NULL);
 
 INSERT INTO `confirmed_service` (`id`, `user_uuid`, `service_uuid`, `created_at`, `updated_at`, `deleted_at`)
 VALUES

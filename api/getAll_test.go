@@ -30,7 +30,7 @@ func TestGetAll(t *testing.T) {
 		assert.Equal(t, nil, err)
 		assert.Equal(t, "2017-08-01", persons.User.Birthday)
 		assert.Equal(t, "090-1145-1419", persons.User.Phone)
-		assert.Equal(t, "福岡", persons.User.Address)
+		assert.Equal(t, "fukuoka", persons.User.Address)
 
 	}
 }

@@ -17,7 +17,7 @@ func DataBaseInit() error {
 	var err error
 	MyDB, err = sql.Open("mysql", dataSource)
 	if err != nil {
-		return err
+		panic(err)
 	}
 	MyOrm, err = gorm.Open("mysql", dataSource)
 	if err != nil {
