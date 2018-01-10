@@ -142,12 +142,30 @@
             </div>
 <div class="panel panel-default">
     <div class="panel-heading">
-        アプリケーション情報
+        設置方法
     </div>
     <ul class="list-group">
         <li class="list-group-item">
-            アクセストークン:{{.Service.Token}}<br>
-            シークレットトークン:{{.Service.Secret}}<br>
+            <h4>A要素の設置</h4>
+            あなたのサービスのUUIDは{{.Service.Uid}}です。<br>
+            ご自身が作成されているサービスに下記のタグを挿入し、ご利用ください。<br>
+            あたなのサービスに訪れたユーザーはリンクより本サービスにアクセスを行い、認証後あたなのウェブサイトへリダイレクトされます。<br>
+            <div class="well well-sm"><samp><</samp>a href="http://localhost:8040/confirmed/{{.Service.Uid}}">ログイン<samp><</samp>/a></div>
+        </li>
+        <li class="list-group-item">
+            <h4>アクセストークン・シークレットトークン</h4>
+            ログインしたユーザーの情報を取得したい場合はマルチログインのAPIをご使用ください。<br>
+            その時に必要となるアクセストークンとシークレットトークンです。<br>
+            <div class="well well-sm">
+                アクセストークン:{{.Service.Token}}<br>
+                シークレットトークン:{{.Service.Secret}}<br>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <h4>APIの使用方法</h4>
+            下記のGitHubリポジトリに幾つかの言語による一例を表しています。<br>
+            参考にしてご利用ください。<br>
+            <a href="https://github.com/Azunyan1111/ml-example">https://github.com/Azunyan1111/ml-example</a>
         </li>
     </ul>
 </div>
