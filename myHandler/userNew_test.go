@@ -14,6 +14,7 @@ import (
 )
 
 func TestGetUserNew(t *testing.T) {
+	mysql.DataBaseInit()
 	e, req, rec := TestTemplateGet("/user/new")
 	c := e.NewContext(req, rec)
 

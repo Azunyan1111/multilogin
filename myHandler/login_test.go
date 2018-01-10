@@ -10,11 +10,13 @@ import (
 	"net/http"
 	"net/url"
 	"testing"
+	"github.com/Azunyan1111/multilogin/mysql"
 )
 
 var code string
 
 func TestGetLogin(t *testing.T) {
+	mysql.DataBaseInit()
 	e, req, rec := TestTemplateGet("/login")
 	c := e.NewContext(req, rec)
 
@@ -40,6 +42,7 @@ func TestGetLogin(t *testing.T) {
 }
 
 func TestPostLogin(t *testing.T) {
+	mysql.DataBaseInit()
 	f := make(url.Values)
 	var user structs.Usered
 	user.Email = "god@god.com"

@@ -17,6 +17,7 @@ import (
 )
 
 func TestGetUserMyPage(t *testing.T) {
+	mysql.DataBaseInit()
 
 	e, req, rec := TestTemplateGet("/user/mypage")
 	c := e.NewContext(req, rec)
@@ -41,6 +42,7 @@ func TestGetUserMyPage(t *testing.T) {
 }
 
 func TestPostUserMyPage(t *testing.T) {
+	mysql.DataBaseInit()
 	orm := mysql.GetOrm()
 
 	var testUser structs.User

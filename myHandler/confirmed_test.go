@@ -107,6 +107,7 @@ func TestGetConfirmedPost2(t *testing.T) {
 }
 
 func TestPostConfirmedDelete(t *testing.T) {
+	mysql.DataBaseInit()
 	orm := mysql.GetOrm()
 	e, req, rec := TestTemplatePost("/confirmed/delete/"+serviceUid, "")
 	c := e.NewContext(req, rec)

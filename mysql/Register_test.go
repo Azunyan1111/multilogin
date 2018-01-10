@@ -17,6 +17,7 @@ func TestDataBaseInit(t *testing.T) {
 }
 
 func TestSelectUserByUuid(t *testing.T) {
+	DataBaseInit()
 	user, err := SelectUserByUuid("uuid2")
 	if err != nil {
 		panic(err)
@@ -25,6 +26,7 @@ func TestSelectUserByUuid(t *testing.T) {
 }
 
 func TestInsertUser(t *testing.T) {
+	DataBaseInit()
 	var user structs.Usered
 	user.UserName = "涼風青葉"
 	user.Email = "aoba@eaglejump.co.jp"

@@ -17,7 +17,7 @@ import (
 )
 
 func TestGetServiceMyPage(t *testing.T) {
-
+	mysql.DataBaseInit()
 	e, req, rec := TestTemplateGet("/service/mypage")
 	c := e.NewContext(req, rec)
 	// session
@@ -41,6 +41,8 @@ func TestGetServiceMyPage(t *testing.T) {
 }
 
 func TestPostServiceMyPage(t *testing.T) {
+	mysql.DataBaseInit()
+
 	orm := mysql.GetOrm()
 	var testService structs.Service
 	orm.Find(&testService, "uuid = ?", serviceUid)

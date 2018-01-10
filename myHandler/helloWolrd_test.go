@@ -5,9 +5,12 @@ import (
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
+	"github.com/Azunyan1111/multilogin/mysql"
 )
 
 func TestHelloWorld(t *testing.T) {
+	mysql.DataBaseInit()
+
 	e, req, rec := TestTemplateGet("/")
 	c := e.NewContext(req, rec)
 

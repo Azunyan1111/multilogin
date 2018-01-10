@@ -14,6 +14,7 @@ import (
 )
 
 func TestGetServiceNew(t *testing.T) {
+	mysql.DataBaseInit()
 	e, req, rec := TestTemplateGet("/service/new")
 	c := e.NewContext(req, rec)
 
