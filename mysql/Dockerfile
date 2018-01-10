@@ -5,8 +5,6 @@ LABEL architecture='mysql_ml'
 # setting
 COPY my.cnf /etc/mysql/conf.d/
 
-ENV MYSQL_ROOT_PASSWORD = password
-
 RUN chmod 600 /etc/mysql/conf.d/my.cnf
 
 # docker-entrypoint-initdb.dの中にある.sqlを勝手に実行してくれる
