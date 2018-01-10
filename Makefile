@@ -12,7 +12,7 @@ test:
 	go test ./...
 
 start:
-	make test
+	make db
 	docker-compose up multilogin
 
 fmt:
