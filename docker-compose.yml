@@ -22,6 +22,8 @@ services:
      export GMAIL_ADDRESS="your gmail address" &&
      export GMAIL_PASSWORD="your gmail password" &&
      go get ./... &&
+     go get github.com/stretchr/testify/assert &&
+     go get github.com/PuerkitoBio/goquery &&
      go test ./... &&
      go run main.go'
 
