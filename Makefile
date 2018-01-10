@@ -8,6 +8,7 @@ db:
 test:
 	make db
 	make fmt
+	go get ./...
 	go test ./...
 
 start:
