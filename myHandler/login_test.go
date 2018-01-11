@@ -1,6 +1,7 @@
 package myHandler
 
 import (
+	"github.com/Azunyan1111/multilogin/mysql"
 	"github.com/Azunyan1111/multilogin/structs"
 	"github.com/PuerkitoBio/goquery"
 	"github.com/gorilla/sessions"
@@ -10,7 +11,6 @@ import (
 	"net/http"
 	"net/url"
 	"testing"
-	"github.com/Azunyan1111/multilogin/mysql"
 )
 
 var code string

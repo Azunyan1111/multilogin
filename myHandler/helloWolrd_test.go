@@ -1,11 +1,11 @@
 package myHandler
 
 import (
+	"github.com/Azunyan1111/multilogin/mysql"
 	"github.com/PuerkitoBio/goquery"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
-	"github.com/Azunyan1111/multilogin/mysql"
 )
 
 func TestHelloWorld(t *testing.T) {
