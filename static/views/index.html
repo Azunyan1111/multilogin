@@ -1,9 +1,23 @@
 {{template "header"}}
 <h1 id="test_helloWorld">Hello {{.}}</h1>
-<a href="login">Login</a><br>
-<a href="user/new">User New</a><br>
-<a href="user/mypage">User mypage</a><br>
-<a href="service/new">service New</a><br>
-<a href="service/mypage">service New</a><br>
-<a href="/confirmed/025ad602-7dba-4c08-8226-704b65f2873c">confirmed</a><br>
+        このアプリケーションはSaaSです。<br>
+        あなたが開発しているサービスにログイン機能をコールバックハンドラとA要素を設置するだけで実装することがてきます。<br>
+        ユーザーの情報は本サービスのAPIを使用することにより取得することが可能です。<br>
+<br>
+        ユーザーはあなたのサービスから設置A要素から本サービスにアクセスした後に<br>
+        SNS等ソーシャルログインや本サービスアカウントを利用してログインした後に、あなたのサービスにリダイレクトされます。<br>
+<br>
+        ユーザーのログインから・ユーザー情報取得までの流れを下記に表します。<br>
+        ユーザーがあなたのサービスにアクセス→設置したA要素から本サービスにアクセス→<br>
+        SNS等ソーシャルログイン・または本サービスにログイン→あなたのサービスにリダイレクト→<br>
+        あなたのサービスから本サービスのAPIにアクセス→ユーザーの情報を取得。<br>
+<br>
+<br>
+        /*---- 以下デバック用----*/<br>
+<a href="login">ログイン</a><br>
+<a href="user/new">ユーザー新規登録</a><br>
+<a href="user/mypage">ユーザーマイページ</a><br>
+<a href="service/new">サービス新規登録</a><br>
+<a href="service/mypage">サービスマイページ</a><br>
+<a href="/confirmed/025ad602-7dba-4c08-8226-704b65f2873c">サービス連携</a><br>
 {{template "footer"}}

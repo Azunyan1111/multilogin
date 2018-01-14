@@ -1,0 +1,37 @@
+{{template "header"}}
+        {{if .Message}}
+<div class="alert alert-warning" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="閉じる"><span aria-hidden="true">×</span></button>
+    <strong>warning</strong>{{.Message}}</div>
+        {{end}}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <p id="test_ConfirmedNew">マルチログインへようこそ</p>
+                </div>
+                <div class="panel-body">
+                    本ウェブサイトはログイン代行サービスサイトです。<br>
+                    下記のいずれかの方法で本ウェブサイトに登録をしましょう。<br>
+
+                    <div class="button-wrap">
+                        <style>
+                            .button-container{
+                                margin: 5px;
+                                padding: 0;
+                                border: 0;
+                                outline: 0;
+                                font-size: 100%;
+                                vertical-align: baseline;
+                                background: transparent;
+                            }
+                        </style>
+                        <p class="button-container"><a href="/login" class="button btn-tw" id="multilogin__login" title="マルチログインに登録"><img height="50px" width="50px" src="https://pbs.twimg.com/profile_images/880934689309065217/RTcuByJ4_400x400.jpg">マルチログインにログインする</a></p>
+                        <p class="button-container"><a href="/user/new" class="button btn-tw" id="multilogin__login" title="マルチログインに登録"><img height="50px" width="50px" src="https://pbs.twimg.com/profile_images/880934689309065217/RTcuByJ4_400x400.jpg">マルチログインに登録</a></p>
+                        <p class="button-container"><a href="/login" class="button btn-tw" id="twitter__login" title="Twitterでログイン"><img height="50px" width="50px" src="https://lh3.googleusercontent.com/32GbAQWrubLZX4mVPClpLN0fRbAd3ru5BefccDAj7nKD8vz-_NzJ1ph_4WMYNefp3A=w300">Twitterでログイン</a></p>
+                        <p class="button-container"><a href="/login" class="button btn-fb" id="facebook__login" title="Facebookでログイン"><img height="50px" width="50px" src="https://www.facebook.com/images/fb_icon_325x325.png">Facebookでログイン</a></p>
+                        <p class="button-container"><a href="/login" class="button btn-line" id="line__login" title="LINEでログイン"><img height="50px" width="50px" src="https://lh3.googleusercontent.com/l-ZZOFGyeKYz3stUbxTECHYnXcRD66C9g0tjiWA_okVIxZyb0E7_esU8LRpq_0LFCu8Y=w300">LINEでログイン</a></p>
+                        <p class="button-container"><a href="/login" class="button btn-google" id="google_plus__login" title="Googleでログイン"><img height="50px" width="50px" src="https://pbs.twimg.com/profile_images/874463635950551040/IhlhyWsq.jpg">Googleでログイン</a></p>
+                        <p class="button-container"><a href="/login" class="button btn-yahoo" id="yahoo__login" title="Yahoo! JAPAN IDでログイン"><img height="50px" width="50px" src="https://s.yimg.com/ge/new/VIEW_ICON.png">Yahoo! JAPAN IDでログイン</a></p>
+                    </div>
+                </div>
+            </div>
+{{template "footer"}}

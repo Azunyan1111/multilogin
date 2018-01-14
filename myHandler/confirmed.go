@@ -23,8 +23,7 @@ func GetConfirmedNew(c echo.Context) error {
 		userUid = fmt.Sprintf("%v", s.Values["uid"])
 	}
 	if len(userUid) < 6 {
-		return c.Render(http.StatusBadRequest, "error.html", structs.Error{StatusCode: http.StatusBadRequest,
-			Message: "連携するにマルチログインにログインしてください"})
+		return c.Render(http.StatusTemporaryRedirect, "userNewForConfirmed.html", nil)
 	}
 
 	// サービス情報取得
