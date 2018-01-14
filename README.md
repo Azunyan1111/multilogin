@@ -24,6 +24,8 @@ Only the beginning.
 make setup
 ```
 Set docker-compose environment variable
+
+Even if you do not log in to Gmail, we will do more than a certain amount
 ```
 export GMAIL_ADDRESS="your gmail address"
 export GMAIL_PASSWORD="your gmail password"
