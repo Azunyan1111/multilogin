@@ -23,15 +23,17 @@ func GetServiceMyPage(c echo.Context) error {
 		serviceUid = fmt.Sprintf("%v", s.Values["uid"])
 	}
 	if len(serviceUid) < 6 {
-		return c.Render(http.StatusBadRequest, "error.html", structs.Error{StatusCode: http.StatusBadRequest,
-			Message: "連携するにマルチログインにログインしてください"})
+		return c.Redirect(http.StatusTemporaryRedirect, "/login")
+		//return c.Render(http.StatusBadRequest, "error.html", structs.Error{StatusCode: http.StatusBadRequest,
+		//	Message: "連携するにマルチログインにログインしてください"})
 	}
 	// サービス情報取得
 	var serviceMyPage structs.ServiceMyPage
 	rows := orm.Find(&serviceMyPage.Service, "uuid = ?", serviceUid).RowsAffected
 	if rows != 1 {
-		return c.Render(http.StatusBadRequest, "error.html", structs.Error{StatusCode: http.StatusBadRequest,
-			Message: "サービス管理者としてログインしていません。サービスの管理を行うには再度ログインしてください。"})
+		return c.Redirect(http.StatusTemporaryRedirect, "/login")
+		//return c.Render(http.StatusBadRequest, "error.html", structs.Error{StatusCode: http.StatusBadRequest,
+		//	Message: "サービス管理者としてログインしていません。サービスの管理を行うには再度ログインしてください。"})
 	}
 
 	// 連携ユーザー情報取得
