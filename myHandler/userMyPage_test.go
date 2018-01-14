@@ -30,6 +30,8 @@ func TestGetUserMyPage(t *testing.T) {
 		return nil
 	})
 	h(c)
+	ses, _ := session.Get("session", c)
+	ses.Values["uid"] = userUid
 
 	if assert.NoError(t, GetUserMyPage(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)
@@ -74,6 +76,8 @@ func TestPostUserMyPage(t *testing.T) {
 		return nil
 	})
 	h(c)
+	ses, _ := session.Get("session", c)
+	ses.Values["uid"] = userUid
 
 	if assert.NoError(t, PostUserMyPage(c)) {
 		assert.Equal(t, http.StatusTemporaryRedirect, rec.Code)

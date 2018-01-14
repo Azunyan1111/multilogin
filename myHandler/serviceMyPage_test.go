@@ -29,6 +29,8 @@ func TestGetServiceMyPage(t *testing.T) {
 		return nil
 	})
 	h(c)
+	ses, _ := session.Get("session", c)
+	ses.Values["uid"] = serviceUid
 
 	if assert.NoError(t, GetServiceMyPage(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)
@@ -78,6 +80,8 @@ func TestPostServiceMyPage(t *testing.T) {
 		return nil
 	})
 	h(c)
+	ses, _ := session.Get("session", c)
+	ses.Values["uid"] = serviceUid
 
 	if assert.NoError(t, PostServiceMyPage(c)) {
 		assert.Equal(t, http.StatusTemporaryRedirect, rec.Code)

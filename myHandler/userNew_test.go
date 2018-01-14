@@ -27,6 +27,8 @@ func TestGetUserNew(t *testing.T) {
 		return nil
 	})
 	h(c)
+	ses, _ := session.Get("session", c)
+	ses.Values["uid"] = ""
 
 	if assert.NoError(t, GetUserNew(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)
@@ -70,6 +72,8 @@ func TestPostUserNew(t *testing.T) {
 		return nil
 	})
 	h(c)
+	ses, _ := session.Get("session", c)
+	ses.Values["uid"] = ""
 
 	if assert.NoError(t, PostUserNew(c)) {
 		assert.Equal(t, http.StatusTemporaryRedirect, rec.Code)

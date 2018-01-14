@@ -27,6 +27,8 @@ func TestGetServiceNew(t *testing.T) {
 		return nil
 	})
 	h(c)
+	ses, _ := session.Get("session", c)
+	ses.Values["uid"] = ""
 
 	if assert.NoError(t, GetServiceNew(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)
@@ -81,6 +83,8 @@ func TestPostServiceNew(t *testing.T) {
 		return nil
 	})
 	h(c)
+	ses, _ := session.Get("session", c)
+	ses.Values["uid"] = ""
 
 	if assert.NoError(t, PostServiceNew(c)) {
 		assert.Equal(t, http.StatusTemporaryRedirect, rec.Code)

@@ -38,6 +38,8 @@ func TestGetConfirmedNew(t *testing.T) {
 		return nil
 	})
 	h(c)
+	ses, _ := session.Get("session", c)
+	ses.Values["uid"] = userUid
 
 	if assert.NoError(t, GetConfirmedNew(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)
@@ -70,6 +72,8 @@ func TestGetConfirmedPost(t *testing.T) {
 		return nil
 	})
 	h(c)
+	ses, _ := session.Get("session", c)
+	ses.Values["uid"] = userUid
 
 	orm := mysql.GetOrm()
 	var confirmedService structs.ConfirmedService
@@ -124,6 +128,9 @@ func TestPostConfirmedDelete(t *testing.T) {
 		return nil
 	})
 	h(c)
+	ses, _ := session.Get("session", c)
+	ses.Values["uid"] = userUid
+	ses.Save(c.Request(), c.Response())
 
 	if assert.NoError(t, PostConfirmedDelete(c)) {
 		assert.Equal(t, http.StatusTemporaryRedirect, rec.Code)
