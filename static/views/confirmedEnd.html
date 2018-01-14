@@ -5,4 +5,6 @@
     <strong>warning</strong>{{.Message}}</div>
         {{end}}
                     <h1 id="test_ConfirmedNew">サービス連携が完了しました。サービスに戻ります。</h1>
+        {{/*TODO:もっと綺麗にリダイレクトしようね*/}}
+<meta http-equiv="refresh" content="2;URL={{.Service.CallbackUrl}}">
 {{template "footer"}}

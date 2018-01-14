@@ -83,8 +83,9 @@ func GetConfirmedPost(c echo.Context) error {
 		return c.Render(http.StatusBadRequest, "error.html", structs.Error{StatusCode: http.StatusInternalServerError,
 			Message: "連携データを正しく登録することができませんでした。再試行してください。"})
 	}
-	// TODO:サービスのコールバックURLへ飛ばす
-	return c.Render(http.StatusOK, "confirmedEnd.html", nil)
+	var ser structs.ServiceMyPage
+	ser.Service = service
+	return c.Render(http.StatusOK, "confirmedEnd.html", ser)
 }
 
 func PostConfirmedDelete(c echo.Context) error {
