@@ -10,6 +10,7 @@ import (
 )
 
 func GetConfirmedNew(c echo.Context) error {
+	orm := mysql.GetOrm()
 	// サービス存在確認
 	serviceUid := c.Param("serviceUid")
 
@@ -27,7 +28,6 @@ func GetConfirmedNew(c echo.Context) error {
 	}
 
 	// サービス情報取得
-	orm := mysql.GetOrm()
 	var service structs.Service
 	orm.Find(&service, "uuid = ?", serviceUid)
 	if service.ID == 0 {
@@ -67,6 +67,12 @@ func GetConfirmedPost(c echo.Context) error {
 	if len(userUid) < 6 {
 		return c.Render(http.StatusBadRequest, "error.html", structs.Error{StatusCode: http.StatusBadRequest,
 			Message: "連携するにマルチログインにログインしてください"})
+	}
+	// ユーザーか確認
+	var user structs.User
+	if orm.First(&user, "uuid = ?", userUid).RowsAffected != 1 {
+		return c.Render(http.StatusBadRequest, "error.html", structs.Error{StatusCode: http.StatusBadRequest,
+			Message: "サービス管理者は連携することができません。ユーザーでログインしてください。"})
 	}
 
 	// 連携情報登録
