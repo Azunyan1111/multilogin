@@ -17,13 +17,12 @@ func TestGetAll(t *testing.T) {
 
 	if assert.NoError(t, GetAll(c)) {
 		byteArray, err := ioutil.ReadAll(rec.Result().Body)
-		if err != nil {
-			panic(err)
-		}
+		assert.NoError(t, err)
 		var persons AllResponse
 		err = json.Unmarshal(byteArray, &persons)
 		assert.Equal(t, nil, err)
 		_, err = strconv.Atoi(persons.User.Age)
+		assert.NoError(t, err)
 		assert.Equal(t, "Azunyan1111", persons.User.UserName)
 		assert.Equal(t, "azunyan1111@azunyan.me", persons.User.Email)
 		assert.Equal(t, "http://noimage.com/azunyan", persons.User.Image)

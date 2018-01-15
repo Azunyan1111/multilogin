@@ -9,9 +9,7 @@ import (
 func TestDataBaseInit(t *testing.T) {
 	if assert.NoError(t, DataBaseInit()) {
 		ra, err := ConnectionTest()
-		if err != nil {
-			panic(err)
-		}
+		assert.NoError(t, err)
 		assert.Equal(t, int64(0), ra)
 	}
 }
@@ -19,9 +17,7 @@ func TestDataBaseInit(t *testing.T) {
 func TestSelectUserByUuid(t *testing.T) {
 	DataBaseInit()
 	user, err := SelectUserByUuid("uuid2")
-	if err != nil {
-		panic(err)
-	}
+	assert.NoError(t, err)
 	assert.Equal(t, "hoge", user.UserName)
 }
 
@@ -31,15 +27,10 @@ func TestInsertUser(t *testing.T) {
 	user.UserName = "涼風青葉"
 	user.Email = "aoba@eaglejump.co.jp"
 	uid, err := InsertUser(user)
-	if err != nil {
-		panic(err)
-	}
+	assert.NoError(t, err)
 	selectUser, err := SelectUserByUuid(uid)
-	if err != nil {
-		panic(err)
-	}
+	assert.NoError(t, err)
 	assert.Equal(t, uid, selectUser.Uid)
-	if err := DeleteUserByUid(uid); err != nil {
-		panic(err)
-	}
+	err = DeleteUserByUid(uid)
+	assert.NoError(t, err)
 }

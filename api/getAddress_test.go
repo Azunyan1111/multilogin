@@ -16,9 +16,7 @@ func TestGetAddress(t *testing.T) {
 
 	if assert.NoError(t, GetAddress(c)) {
 		byteArray, err := ioutil.ReadAll(rec.Result().Body)
-		if err != nil {
-			panic(err)
-		}
+		assert.NoError(t, err)
 		var persons AddressResponse
 		err = json.Unmarshal(byteArray, &persons)
 		assert.Equal(t, nil, err)

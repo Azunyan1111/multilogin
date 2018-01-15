@@ -96,7 +96,6 @@ func TestPostUserNew(t *testing.T) {
 	assert.Equal(t, user.Birthday, sqlUser.Birthday)
 	assert.Equal(t, user.Phone, sqlUser.Phone)
 	assert.Equal(t, user.Address, sqlUser.Address)
-	if err := mysql.DeleteUserByTestUser(); err != nil {
-		panic(err)
-	}
+	err := mysql.DeleteUserByTestUser()
+	assert.NoError(t, err)
 }

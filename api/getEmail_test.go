@@ -16,9 +16,7 @@ func TestGetEmail(t *testing.T) {
 
 	if assert.NoError(t, GetEmail(c)) {
 		byteArray, err := ioutil.ReadAll(rec.Result().Body)
-		if err != nil {
-			panic(err)
-		}
+		assert.NoError(t, err)
 		var persons EmailResponse
 		err = json.Unmarshal(byteArray, &persons)
 		assert.Equal(t, nil, err)

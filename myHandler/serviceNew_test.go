@@ -113,9 +113,8 @@ func TestPostServiceNew(t *testing.T) {
 	assert.Equal(t, boolToInt(user.UserPhone), sqlUser.UserPhone)
 	assert.Equal(t, boolToInt(user.UserAddress), sqlUser.UserAddress)
 
-	if err := mysql.DeleteUserByTestService(); err != nil {
-		panic(err)
-	}
+	err := mysql.DeleteUserByTestService()
+	assert.NoError(t, err)
 }
 
 func checkString(check bool) string {

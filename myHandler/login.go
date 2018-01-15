@@ -18,7 +18,8 @@ func GetLogin(c echo.Context) error {
 	// セッション確認
 	s, err := session.Get("session", c)
 	if err != nil {
-		panic(err)
+		return c.Render(http.StatusInternalServerError, "error.html", structs.Error{StatusCode: http.StatusInternalServerError,
+			Message: "サーバーの処理に異常がありました。エラーコード:1001"})
 	}
 	var userUid string
 	if s != nil {
@@ -40,7 +41,8 @@ func PostLogin(c echo.Context) error {
 	// セッション確認
 	s, err := session.Get("session", c)
 	if err != nil {
-		panic(err)
+		return c.Render(http.StatusInternalServerError, "error.html", structs.Error{StatusCode: http.StatusInternalServerError,
+			Message: "サーバーの処理に異常がありました。エラーコード:1001"})
 	}
 	var userUid string
 	if s != nil {
@@ -84,7 +86,8 @@ func PostLoginCode(c echo.Context) error {
 	// セッション確認
 	s, err := session.Get("session", c)
 	if err != nil {
-		panic(err)
+		return c.Render(http.StatusInternalServerError, "error.html", structs.Error{StatusCode: http.StatusInternalServerError,
+			Message: "サーバーの処理に異常がありました。エラーコード:1001"})
 	}
 	var userUid string
 	if s != nil {
