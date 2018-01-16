@@ -12,8 +12,15 @@ import (
 	"html/template"
 	"io"
 	"math/rand"
-	"os"
 	"time"
+	"golang.org/x/crypto/acme/autocert"
+	"os"
+)
+
+type (
+	Host struct {
+		Echo *echo.Echo
+	}
 )
 
 func main() {
@@ -46,7 +53,6 @@ func main() {
 	e.Use(session.Middleware(sessions.NewCookieStore([]byte("key") /*securecookie.GenerateRandomKey(64)*/)))
 
 	e.Use(customHeader)
-	//e.StartAutoTLS(":443")
 
 	e.Static("/static", "static")
 
@@ -86,7 +92,15 @@ func main() {
 	e.GET("/api/user/index", api.Sum)
 	e.GET("/api/user/all", api.GetAll)
 
-	e.Start(":" + os.Getenv("PORT"))
+	stage := os.Getenv("STAGE")
+	if stage == "PRO"{
+		e.AutoTLSManager.HostPolicy = autocert.HostWhitelist("azunyan1111.com")
+		e.AutoTLSManager.Cache = autocert.DirCache("/var/www/ml")
+		e.Pre(middleware.HTTPSWWWRedirect())
+		e.StartAutoTLS(":443")
+	}else{
+		e.Start(":" + os.Getenv("PORT"))
+	}
 }
 
 func customHeader(next echo.HandlerFunc) echo.HandlerFunc {
