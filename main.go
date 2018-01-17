@@ -47,7 +47,11 @@ func main() {
 	e.Use(middleware.Recover())
 	e.Use(middleware.CSRFWithConfig(middleware.CSRFConfig{
 		TokenLookup: "form:csrf",
+		CookieHTTPOnly:true,
+		CookieSecure:true,
+		CookieMaxAge: 86400 * 30,
 	}))
+
 	e.Use(middleware.Gzip())
 	e.Use(middleware.Secure())
 	cs := &sessions.CookieStore{
