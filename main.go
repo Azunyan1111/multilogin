@@ -49,6 +49,9 @@ func main() {
 	}))
 	e.Use(middleware.Gzip())
 	e.Use(middleware.Secure())
+	store := sessions.NewCookieStore([]byte("key"))
+	store.Options.HttpOnly = true
+	store.Options.Secure = true
 	e.Use(session.Middleware(sessions.NewCookieStore([]byte("key") /*securecookie.GenerateRandomKey(64)*/)))
 
 	e.Use(customHeader)
