@@ -14,13 +14,9 @@ func SendMail(address string, subject string, body string) error {
 	htmlContent := body
 	message := mail.NewSingleEmail(from, subject, to, plainTextContent, htmlContent)
 	client := sendgrid.NewSendClient(os.Getenv("SENDGRID_API_KEY"))
-	res, err := client.Send(message)
+	_, err := client.Send(message)
 	if err != nil {
 		return err
-	}else{
-		log.Println(res.StatusCode)
-		log.Println(res.Headers)
-		log.Println(res.Body)
 	}
 	return nil
 }
