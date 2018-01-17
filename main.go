@@ -91,14 +91,7 @@ func main() {
 	e.GET("/api/user/index", api.Sum)
 	e.GET("/api/user/all", api.GetAll)
 
-	stage := os.Getenv("STAGE")
-	if stage == "PRO"{
-		e.Pre(middleware.HTTPSWWWRedirect())
-		e.StartTLS(":443","/etc/letsencrypt/live/azunyan1111.com/cert.pem",
-			"/etc/letsencrypt/live/azunyan1111.com/privkey.pem")
-	}else{
-		e.Start(":" + os.Getenv("PORT"))
-	}
+	e.Start(":" + os.Getenv("PORT"))
 }
 
 func customHeader(next echo.HandlerFunc) echo.HandlerFunc {
