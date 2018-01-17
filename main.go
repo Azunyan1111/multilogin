@@ -94,10 +94,9 @@ func main() {
 
 	stage := os.Getenv("STAGE")
 	if stage == "PRO"{
-		e.AutoTLSManager.HostPolicy = autocert.HostWhitelist("azunyan1111.com")
-		e.AutoTLSManager.Cache = autocert.DirCache("/var/www/ml")
 		e.Pre(middleware.HTTPSWWWRedirect())
-		e.StartAutoTLS(":443")
+		e.StartTLS(":443","/etc/letsencrypt/live/azunyan1111.com/cert.pem",
+			"/etc/letsencrypt/live/azunyan1111.com/privkey.pem")
 	}else{
 		e.Start(":" + os.Getenv("PORT"))
 	}
