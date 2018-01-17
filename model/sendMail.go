@@ -4,7 +4,6 @@ import (
 	"os"
 	"github.com/sendgrid/sendgrid-go"
 	"github.com/sendgrid/sendgrid-go/helpers/mail"
-	"log"
 )
 
 func SendMail(address string, subject string, body string) error {
