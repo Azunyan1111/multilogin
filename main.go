@@ -14,6 +14,7 @@ import (
 	"math/rand"
 	"time"
 	"os"
+	"github.com/gorilla/securecookie"
 )
 
 type (
@@ -49,10 +50,17 @@ func main() {
 	}))
 	e.Use(middleware.Gzip())
 	e.Use(middleware.Secure())
-	store := sessions.NewCookieStore([]byte("key"))
-	store.Options.HttpOnly = true
-	store.Options.Secure = true
-	e.Use(session.Middleware(store))
+	cs := &sessions.CookieStore{
+		Codecs: securecookie.CodecsFromPairs([]byte("key")),
+		Options: &sessions.Options{
+			Path:   "/",
+			MaxAge: 86400 * 30,
+			HttpOnly:true,
+			Secure:true,
+		},
+	}
+	cs.MaxAge(cs.Options.MaxAge)
+	e.Use(session.Middleware(cs))
 
 	e.Use(customHeader)
 
