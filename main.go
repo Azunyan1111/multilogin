@@ -52,7 +52,7 @@ func main() {
 	store := sessions.NewCookieStore([]byte("key"))
 	store.Options.HttpOnly = true
 	store.Options.Secure = true
-	e.Use(session.Middleware(sessions.NewCookieStore([]byte("key") /*securecookie.GenerateRandomKey(64)*/)))
+	e.Use(session.Middleware(store))
 
 	e.Use(customHeader)
 
