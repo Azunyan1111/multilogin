@@ -13,7 +13,6 @@ import (
 	"io"
 	"math/rand"
 	"time"
-	"golang.org/x/crypto/acme/autocert"
 	"os"
 )
 
