@@ -76,7 +76,10 @@ func PostLogin(c echo.Context) error {
 		strconv.Itoa(rand.Intn(9)) + strconv.Itoa(rand.Intn(9)) + strconv.Itoa(rand.Intn(9))
 	log.Println(code)
 	redis.Set(code, uid)
-	model.SendMail(email, "ログインコードお知らせします。", "ログインコードは「"+code+"」です。数字四桁になのます。")
+	if err := model.SendMail(email, "ログインコードお知らせします。", "ログインコードは「"+code+"」です。数字四桁になのます。"); err != nil{
+		loginCodePage.Message = "エラーです。再度試してください" + err.Error()
+		return c.Render(http.StatusTemporaryRedirect, "loginCode.html", loginCodePage)
+	}
 	return c.Render(http.StatusTemporaryRedirect, "loginCode.html", loginCodePage)
 }
 

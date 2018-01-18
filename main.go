@@ -47,8 +47,8 @@ func main() {
 	e.Use(middleware.Recover())
 	e.Use(middleware.CSRFWithConfig(middleware.CSRFConfig{
 		TokenLookup: "form:csrf",
-		CookieHTTPOnly:true,
-		CookieSecure:true,
+		//CookieHTTPOnly:true,
+		//CookieSecure:true,
 		CookieMaxAge: 86400 * 30,
 	}))
 
@@ -59,8 +59,8 @@ func main() {
 		Options: &sessions.Options{
 			Path:   "/",
 			MaxAge: 86400 * 30,
-			HttpOnly:true,
-			Secure:true,
+			//HttpOnly:true,
+			//Secure:true,
 		},
 	}
 	cs.MaxAge(cs.Options.MaxAge)
