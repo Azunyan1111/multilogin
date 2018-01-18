@@ -93,6 +93,7 @@ func GetConfirmedPost(c echo.Context) error {
 	}
 	var ser structs.ServiceMyPage
 	ser.Service = service
+	ser.Service.CallbackUrl += "?uuid=" + userUid
 	return c.Render(http.StatusOK, "confirmedEnd.html", ser)
 }
 
