@@ -7,6 +7,8 @@ Service developers establish links and get user information by calling API.
 
 Current development stage.
 
+<a href="https://azunyan1111.com">https://azunyan1111.com</a>
+
 ### use technology 
 ```
 Go lang (echo)
@@ -25,10 +27,21 @@ make setup
 ```
 Set docker-compose environment variable
 
-Even if you do not log in to Gmail, we will do more than a certain amount
+sendgrid is mail sender service.<a href="https://app.sendgrid.com">https://app.sendgrid.com</a>
+
+docker-conpose.yml 
 ```
-export GMAIL_ADDRESS="your gmail address"
-export GMAIL_PASSWORD="your gmail password"
+export SENDGRID_API_KEY="your SENDGRID API KEY" &&
+```
+If you do not use it please change this return to nil
+
+sendMail.go
+```
+	if err != nil {
+		return err // return nil
+	}
+}
+
 ```
 ## How to use
 Start up the server
