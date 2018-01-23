@@ -9,7 +9,7 @@ Current development stage.
 
 <a href="https://azunyan1111.com">https://azunyan1111.com</a>
 
-### use technology 
+### Use technology 
 ```
 Go lang (echo)
 Go Test
@@ -18,8 +18,18 @@ MySQL + (ormapper:gorm)
 Redis
 Docker-compose
 Makefile
-HMAC-SHA256 (API)
 ```
+
+### Security
+
+```
+CSRF Token
+Cookie secure
+HMAC-SHA256 (API)
+Response (example XSS Protection Header)
+https
+```
+
 ## Get Start
 Only the beginning.
 ```
@@ -40,8 +50,6 @@ sendMail.go
 	if err != nil {
 		return err // return nil
 	}
-}
-
 ```
 ## How to use
 Start up the server
