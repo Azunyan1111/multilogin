@@ -5,10 +5,6 @@ Provide login function to the service.
 
 Service developers establish links and get user information by calling API.
 
-Current development stage.
-
-<a href="https://azunyan1111.com">https://azunyan1111.com</a>
-
 ### Use technology 
 ```
 Go lang (echo)
